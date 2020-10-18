@@ -1,0 +1,548 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>케어름 마스터</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"
+            integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+          integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+</head>
+<body>
+<!--상단 네비바-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">DUAL</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown_menu_1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    통합관리
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown_menu_1">
+                    <a class="dropdown-item" href="#">예약관리</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">기업관리</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">병원관리</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">정산관리</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">패키지관리</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">결과관리</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">통계관리</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">서비스관리</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">환경설정</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    계정
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">로그아웃</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">관리자 정보</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+<!--상단 네비바-->
+<!--콘텐츠 내용-->
+<div class="container" style="width: 100%; max-width: none">
+    <div class="row">
+        <div class="col" style="background-color: red">
+            통계자료들어갈곳
+        </div>
+        <div class="col" style="background-color: green">
+            <h4>공지사항</h4>
+            <table id="noticeTable" class="table">
+                <thead>
+                <tr>
+                    <th scope="col">NO</th>
+                    <th scope="col">제목</th>
+                    <th scope="col">작성자</th>
+                    <th scope="col">등록일</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" style="background-color: yellowgreen">
+            <h4>담당자정보</h4>
+            <table id="companyManagerTable" class="table">
+                <thead>
+                <tr>
+                    <th scope="col">기업명</th>
+                    <th scope="col">사업장</th>
+                    <th scope="col">이름</th>
+                    <th scope="col">연락처</th>
+                    <th scope="col">이메일</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <div class="col" style="background-color: yellow">
+            <h4>운영일정</h4>
+            <table id="manageScheduleTable" class="table">
+                <thead>
+                <tr>
+                    <th scope="col">병원명</th>
+                    <th scope="col">고객사</th>
+                    <th scope="col">사업장</th>
+                    <th scope="col">오픈일</th>
+                    <th scope="col">마감일</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col" style="background-color: lightcoral">
+            <h4>예약정보</h4>
+            <table id="reservationInfos" class="table">
+                <thead>
+                <tr>
+                    <th scope="col">NO</th>
+                    <th scope="col">서비스</th>
+                    <th scope="col">고객사</th>
+                    <th scope="col">사업장</th>
+                    <th scope="col">아이디/사번</th>
+                    <th scope="col">성명</th>
+                    <th scope="col">등급</th>
+                    <th scope="col">생년월일</th>
+                    <th scope="col">검진병원</th>
+                    <th scope="col">연락처</th>
+                    <th scope="col">1차예약일</th>
+                    <th scope="col">2차예약일</th>
+                    <th scope="col">수검상태</th>
+                    <th scope="col">패키지명</th>
+                    <th scope="col">패키지금액</th>
+                    <th scope="col">지원금</th>
+                    <th scope="col">개인정보 동의(듀얼)</th>
+                    <th scope="col">개인정보 동의(병원)</th>
+                    <th scope="col">공단 차감</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+<button class="btn_test_addCompany">회사, 매니저 생성</button>
+<button class="btn_test_addCompanyManager">매니저 추가</button>
+<button class="btn_test_addHospital">병원, 매니저 생성</button>
+<button class="btn_test_addCustomer">고객, 가족 생성</button>
+<button class="btn_test_addFamily">가족 추가</button>
+<button class="btn_test_addPackage">패키지 생성</button>
+<button class="btn_test_addReservation">예약 생성</button>
+</body>
+</html>
+<script type="text/javascript">
+    //에이작스대신 이거 써보기 >> axios
+
+    /*페이지 로드시 정보 가져와 테이블에 뿌려주기*/
+
+    function setNoticeData(data) {
+        for (i = 0; i < data.length; i++) {
+            var html = '';
+            html += '<tr>';
+            html += '<td>'+data[i].id+'</td>';
+            html += '<td>'+data[i].title+'</td>';
+            html += '<td>'+data[i].author+'</td>';
+            html += '<td>'+data[i].createDate+'</td>';
+            html += '</tr>';
+
+            $("#noticeTable").append(html);
+        }
+    }
+
+    function setCompanyManagerData(data) {
+        for (i = 0; i < data.length; i++) {
+            var html = '';
+            html += '<tr>';
+            html += '<td>' + data[i].companyName + '</td>';
+            html += '<td>' + data[i].companyBranch + '</td>';
+            html += '<td>' + data[i].name + '</td>';
+            html += '<td>' + data[i].phone + '</td>';
+            html += '<td>' + data[i].email + '</td>';
+            html += '</tr>';
+
+            $("#companyManagerTable").append(html);
+        }
+    }
+
+    function setManageScheduleData(data) {
+        for (i = 0; i < data.length; i++) {
+            var html = '';
+            html += '<tr>';
+            html += '<td>' + data[i].hospitalName + '</td>';
+            html += '<td>' + data[i].companyName + '</td>';
+            html += '<td>' + data[i].companyBranch + '</td>';
+            html += '<td>' + data[i].reservationStartDate + '</td>';
+            html += '<td>' + data[i].reservationEndDate + '</td>';
+            html += '</tr>';
+
+            $("#manageScheduleTable").append(html);
+        }
+    }
+
+    function setReservationData(data) {
+        for (i = 0; i < data.length; i++) {
+            var html = '';
+            html += '<tr>';
+            html += '<td>' + data[i].id + '</td>';
+            html += '<td>' + data[i].serviceName + '</td>';
+            html += '<td>' + data[i].companyName + '</td>';
+            html += '<td>' + data[i].companyBranch + '</td>';
+            html += '<td>' + data[i].familyId + '</td>';
+            html += '<td>' + data[i].familyName + '</td>';
+            html += '<td>' + data[i].familyGrade + '</td>';
+            html += '<td>' + data[i].familyBirthDate + '</td>';
+            html += '<td>' + data[i].hospitalName + '</td>';
+            html += '<td>' + data[i].familyPhone + '</td>';
+            html += '<td>' + data[i].firstWishDate + '</td>';
+            html += '<td>' + data[i].secondWishDate + '</td>';
+            html += '<td>' + data[i].ipCheck + '</td>';
+            html += '<td>' + data[i].packageName + '</td>';
+            html += '<td>' + data[i].packagePrice + '</td>';
+            html += '<td>' + data[i].companySupportPrice + '</td>';
+            html += '<td>' + data[i].familyPsInfoCheckDual + '</td>';
+            html += '<td>' + data[i].familyPsInfoCheckHos + '</td>';
+            html += '<td>' + data[i].familyPcDiscount + '</td>';
+            html += '</tr>';
+
+            $("#reservationInfos").append(html);
+        }
+    }
+
+    $.ajax({
+        type : "POST",
+        url : "https://api.careroom.kr/master/getAllNoticeInfo",
+        success : function(data) {
+            setNoticeData(data);
+        },
+        error : function(e) {
+            alert('서버 연결 도중 에러가 났습니다. 다시 시도해 주십시오.');
+        }
+    });
+
+    $.ajax({
+        type : "POST",
+        url : "https://api.careroom.kr/master/getAllCompanyManager",
+        success : function(data) {
+            setCompanyManagerData(data);
+        },
+        error : function(e) {
+            alert('서버 연결 도중 에러가 났습니다. 다시 시도해 주십시오.');
+        }
+    });
+
+    $.ajax({
+        type : "POST",
+        url : "https://api.careroom.kr/master/getAllManageSchedule",
+        success : function(data) {
+            setManageScheduleData(data);
+        },
+        error : function(e) {
+            alert('서버 연결 도중 에러가 났습니다. 다시 시도해 주십시오.');
+        }
+    });
+
+
+    var searchItems = new Object();
+    searchItems.servedYear = "all";
+    searchItems.reservationServiceName = "all";
+    searchItems.companyName = "all";
+    searchItems.companyBranch = "all";
+    searchItems.reservationStatus = "all";
+    searchItems.hospitalName = "all";
+
+    $.ajax({
+        type : "POST",
+        dataType : "json",
+        contentType: "application/json; charset=utf-8;",
+        url : "https://api.careroom.kr/master/getSelectedMaster003ReservationInfos",
+        data: JSON.stringify(searchItems),
+        success : function(data) {
+            setReservationData(data);
+        },
+        error : function(e) {
+            alert('서버 연결 도중 에러가 났습니다. 다시 시도해 주십시오.');
+        }
+    });
+
+
+
+    $('.btn_test_addCompany').click(function(){
+        var obj = new Object();
+        var cmL = new Array();
+
+        obj.name = '회사이름';
+        obj.branch = '회사영업장';
+        obj.systemOpen = true;
+        obj.contract = true;
+        obj.address = '회사주소';
+
+        obj.email = '회사이메일';
+        obj.rebatePrice = 20000;
+        obj.pcDiscount = true;
+        obj.paymentCode = "분기별";
+        obj.supportFundCode = "계산서";
+        obj.balanceCode = "현장결제";
+        obj.familySupport = true;
+        obj.memo = '회사메모';
+
+        for(var i = 0; i<3; i++){
+            var cm = new Object();
+            cm.companyId = obj.id;
+            cm.department = i+"부서";
+            cm.email = "email"+i;
+            cm.password = "pw"+i;
+            cm.name = "name"+i;
+            cm.phone = "phone"+i;
+            cmL[i] = cm;
+        }
+        obj.companyManagerList = cmL;
+
+
+        $.ajax({
+            type : "POST",
+            dataType : "json",
+            contentType: "application/json; charset=utf-8;",
+            url : "https://api.careroom.kr/master/createNewCompany",
+            data: JSON.stringify(obj),
+            success : function(data) {
+                alert(data.message);
+            },
+            error : function(e) {
+                alert('서버 연결 도중 에러가 났습니다. 다시 시도해 주십시오.');
+            }
+        });
+    });
+    $('.btn_test_addCompanyManager').click(function(){
+        var cm = new Object();
+        cm.companyId = "CO#1";
+        cm.department = 9+"부서";
+        cm.email = "email"+9;
+        cm.password = "pw"+9;
+        cm.name = "name"+9;
+        cm.phone = "phone"+9;
+
+        $.ajax({
+            type : "POST",
+            dataType : "json",
+            contentType: "application/json; charset=utf-8;",
+            url : "https://api.careroom.kr/master/createNewCompanyManager",
+            data: JSON.stringify(cm),
+            success : function(data) {
+                alert(data.message);
+            },
+            error : function(e) {
+                alert('서버 연결 도중 에러가 났습니다. 다시 시도해 주십시오.');
+            }
+        });
+    });
+    $('.btn_test_addHospital').click(function(){
+        var obj = new Object();
+        var hml = new Array();
+        var hel = new Array();
+        obj.name = '병원이름';
+        obj.image = "병원이미지주소";
+        obj.url = "병원url";
+        obj.address = '회사주소';
+        obj.grade = '의원';
+        obj.phone = "042-123-1234";
+        obj.reg_num = "333-55-77777";
+        obj.pc_price = 25600;
+
+        for(var i = 0; i<3; i++){
+            var hm = new Object();
+            hm.department = i+"담당";
+            hm.email = "email"+i;
+            hm.password = "pw"+i;
+            hm.name = "name"+i;
+            hm.phone = "phone"+i;
+            hml[i] = hm;
+        }
+        obj.hospitalManagerList = hml;
+
+        for(var i = 0; i<5; i++){
+            var hm = new Object();
+            hm.name = i+"장비이름";
+            hm.modelCode = "모델코드"+i;
+            hm.password = "pw"+i;
+            hm.count = i+100;
+            hm.introductionYear = 2019;
+            hm.memo = "메모들어간다~"+i;
+            hel[i] = hm;
+        }
+        obj.hospitalEquipmentList = hel;
+
+
+        $.ajax({
+            type : "POST",
+            dataType : "json",
+            contentType: "application/json; charset=utf-8;",
+            url : "https://api.careroom.kr/master/createNewHospital",
+            data: JSON.stringify(obj),
+            success : function(data) {
+                alert(data.message);
+            },
+            error : function(e) {
+                alert('서버 연결 도중 에러가 났습니다. 다시 시도해 주십시오.');
+            }
+        });
+    });
+    $('.btn_test_addHospitalManager').click(function(){
+        alert("구현중");
+    });
+    $('.btn_test_addCustomer').click(function(){
+        var obj = new Object();
+        var fml = new Array();
+
+        obj.email = "dltkdgns3435@naver.com";
+        obj.password = "9611293435";
+        obj.name = '고객이름';
+        obj.companyId = 'CO#1';
+        obj.addFamily = true;
+
+        var numOfFam = 1;
+        //i=0일때 본인
+        for(var i = 0; i<numOfFam; i++){
+            var fm = new Object();
+            fm.name = obj.name;
+            fm.birthDate = "1996-11-29";
+            fm.sex = true;
+            fm.phone = "010-6828-3435";
+            fm.address = "고객주소";
+            fm.pcDiscount = false;
+            fm.supportPercent = 99;
+            fm.supportPrice = 1000000;
+            fm.grade = "본인";
+            fml[i] = fm;
+        }
+        obj.families = fml;
+
+        $.ajax({
+            type : "POST",
+            dataType : "json",
+            contentType: "application/json; charset=utf-8;",
+            url : "https://api.careroom.kr/master/createNewCustomer",
+            data: JSON.stringify(obj),
+            success : function(data) {
+                alert(data.message);
+            },
+            error : function(e) {
+                alert('서버 연결 도중 에러가 났습니다. 다시 시도해 주십시오.');
+            }
+        });
+    });
+    $('.btn_test_addFamily').click(function(){
+        var fm = new Object();
+        fm.name = "임현주";
+        fm.ownerId = "CU#1";
+        fm.birthDate = "1996-12-22";
+        fm.sex = false;
+        fm.phone = "010-1234-5678";
+        fm.address = "고객주소";
+        fm.pcDiscount = false;
+        fm.supportPercent = 100;
+        fm.supportPrice = 500000;
+        fm.grade = "배우자";
+
+        $.ajax({
+            type : "POST",
+            dataType : "json",
+            contentType: "application/json; charset=utf-8;",
+            url : "https://api.careroom.kr/master/createNewFamily",
+            data: JSON.stringify(fm),
+            success : function(data) {
+                alert(data.message);
+            },
+            error : function(e) {
+                alert('서버 연결 도중 에러가 났습니다. 다시 시도해 주십시오.');
+            }
+        });
+    });
+    $('.btn_test_addPackage').click(function(){
+        var pkg = new Object();
+        var ijl = new Array();
+        pkg.name = "럭셔리";
+        pkg.companyId = "CO#1";
+        pkg.reservationStartDate = "2020-11-01";
+        pkg.reservationEndDate = "2020-12-30";
+        pkg.price = 500000;
+
+        $.ajax({
+            type : "POST",
+            dataType : "json",
+            contentType: "application/json; charset=utf-8;",
+            url : "https://api.careroom.kr/master/createPackage",
+            data: JSON.stringify(pkg),
+            success : function(data) {
+                alert(data.message);
+            },
+            error : function(e) {
+                alert('서버 연결 도중 에러가 났습니다. 다시 시도해 주십시오.');
+            }
+        });
+    });
+    $('.btn_test_addReservation').click(function(){
+        var rsv = new Object();
+        rsv.packageId = "PKG#1";
+        rsv.customerId = "CU#1";
+        rsv.familyId = "FAM#1";
+        rsv.serviceName = "건강검진";
+        rsv.firstWishDate = "2020-11-01";
+        rsv.secondWishDate = "2020-12-30";
+
+        var pipIds = new Array();
+        for(var i=0; i<30; i++){
+            pipIds[i] = "검사항목코드"+i;
+        }
+        rsv.pIpId = pipIds;
+
+
+        $.ajax({
+            type : "POST",
+            dataType : "json",
+            contentType: "application/json; charset=utf-8;",
+            url : "https://api.careroom.kr/master/createNewReservatioin",
+            data: JSON.stringify(rsv),
+            success : function(data) {
+                alert(data.message);
+            },
+            error : function(e) {
+                alert('서버 연결 도중 에러가 났습니다. 다시 시도해 주십시오.');
+            }
+        });
+    });
+</script>

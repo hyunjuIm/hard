@@ -1,0 +1,120 @@
+html, body {
+  width: 100%;
+  height: auto;
+  background-color: #f6f6f6;
+}
+
+th, tr, td {
+  text-align: center;
+  vertical-align: center;
+  margin: 0 auto;
+}
+
+.menu-title, h4, h5, h6 {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.btn-purple-square {
+  display: inline-block;
+  height: 36px;
+  line-height: 36px;
+  padding: 0 20px;
+  background: #3529b1;
+  text-align: center;
+  color: #fff;
+  font-size: 15px;
+}
+
+.excel {
+  display: inline-block;
+  width: 110px;
+  height: 36px;
+  background: url("../images/btn_excel.png");
+}
+
+ul.img-circle li {
+  padding-left: 20px;
+  background : url('../images/bul_circle.png') left center no-repeat;
+}
+
+.navbar {
+  background-color: white;
+  box-shadow: 0px 0px 20px #d3d2d5;
+  text-align: center;
+}
+
+.nav-item a {
+  color: black !important;
+}
+
+.nav-item a:hover {
+  color: #5645ed !important;
+}
+
+.dropdown:hover>.dropdown-menu,
+.dropdown:active>.dropdown-menu {
+  display: block;
+  margin-top: -2px;
+}
+
+.dropdown>.dropdown-toggle:active {
+  /*Without this, clicking will make it sticky*/
+  pointer-events: auto;
+}
+
+.main-item {
+  font-size: 18px;
+}
+
+.sub-item {
+  font-size: 15px;
+}
+
+.search {
+  display: flex;
+  width: 400px;
+  border: 1px solid #d3d2d5;
+  background-color: #fff;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+.search-input {
+  color: white;
+  border: 0;
+  outline: 0;
+  background: none;
+  width: 0;
+  caret-color: transparent;
+  line-height: 20px;
+  transition: width 0.4s linear
+}
+
+.search .search-input {
+  padding: 0 10px;
+  width: 100%;
+  caret-color: gray;
+  font-size: 14px;
+  font-weight: 300;
+  color: black;
+  transition: width 0.4s linear
+}
+
+.search-icon {
+  height: 30px;
+  width: 40px;
+  float: right;
+  border: 0;
+  outline: 0;
+  background : url('../images/btn_search.png') left center no-repeat;
+}
+
+.search-icon:hover {
+  color: #fff !important
+}
+
+a:link {
+  text-decoration: none
+}
