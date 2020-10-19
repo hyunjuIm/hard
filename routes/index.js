@@ -11,6 +11,10 @@ router.get('/reservation-list', function(req, res, next) {
   res.render('reservation-list');
 });
 
+//기업관리
+router.get('/company-list', function(req, res, next) {
+  res.render('company-list');
+});
 
 
 module.exports = router;

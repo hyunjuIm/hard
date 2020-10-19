@@ -25,13 +25,31 @@ th, tr, td {
   text-align: center;
   color: #fff;
   font-size: 15px;
+  text-decoration: none;
+}
+
+.btn-save-square {
+  display: inline-block;
+  height: 36px;
+  line-height: 36px;
+  padding: 0 20px;
+  background: #424242;
+  text-align: center;
+  color: #fff;
+  font-size: 15px;
+  text-decoration: none;
+}
+
+.btn-save-square:hover,
+.btn-purple-square:hover {
+  color: white
 }
 
 .excel {
   display: inline-block;
   width: 110px;
   height: 36px;
-  background: url("../images/btn_excel.png");
+  background: url("../images/btn_excel.png") no-repeat;
 }
 
 ul.img-circle li {
