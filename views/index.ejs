@@ -162,12 +162,10 @@
         timeout: 1000,
         headers: {'token': token}
     });
-    /*
     //공지사항
     instance.post('M002002_RES').then(res => {
         setNoticeData(res.data);
     });
-    */
     //담당자정보
     instance.post('M002003_RES').then(res => {
         setCompanyManagerData(res.data);
