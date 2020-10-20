@@ -17,6 +17,7 @@
 
     <link rel='stylesheet' href='/stylesheets/style.css'/>
 
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <style>
 
         thead {
@@ -155,75 +156,22 @@
     }
 
     var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJMU0giLCJleHAiOjE2MDMwOTU5MzJ9.ZrwYNSVhfzpHPxEI01PQ757Z7hvaFr1jDRiEvKFvb7U";
-
-    $.ajax({
-        type: "POST",
-        dataType: "json",
-        contentType: "application/json; charset=utf-8;",
-        url: "http://192.168.219.104:8080/master/getAllNoticeInfo",
-        headers: {
-            "token": token
-        },
-        success: function (data) {
-            setNoticeData(data);
-        },
-        error: function (e) {
-            alert('서버 연결 도중 에러가 났습니다. 다시 시도해 주십시오.');
-        }
+    const instance = axios.create({
+        baseURL: 'https://api.careroom.kr/master/api/v1/',
+        timeout: 1000,
+        headers: {'token': token}
     });
-
-    $.ajax({
-        type: "POST",
-        dataType: "json",
-        contentType: "application/json; charset=utf-8;",
-        headers: {
-            "token": token
-        },
-        url: "http://192.168.219.104:8080/master/getAllCompanyManager",
-        success: function (data) {
-            setCompanyManagerData(data);
-        },
-        error: function (e) {
-            alert('서버 연결 도중 에러가 났습니다. 다시 시도해 주십시오.');
-        }
+    //공지사항
+    instance.post('M002002_RES').then(res => {
+        setNoticeData(res.data);
     });
-
-    $.ajax({
-        type: "POST",
-        dataType: "json",
-        contentType: "application/json; charset=utf-8;",
-        headers: {
-            "token": token
-        },
-        url: "http://192.168.219.104:8080/master/getAllManageSchedule",
-        success: function (data) {
-            setManageScheduleData(data);
-        },
-        error: function (e) {
-            alert('서버 연결 도중 에러가 났습니다. 다시 시도해 주십시오.');
-        }
+    //담당자정보
+    instance.post('M002003_RES').then(res => {
+        setCompanyManagerData(res.data);
     });
-
-
-
-    var test123 = Object();
-    test123.reservationId = "RSV#1";
-
-    $.ajax({
-        type: "POST",
-        dataType: "json",
-        contentType: "application/json; charset=utf-8;",
-        url: "http://192.168.219.104:8080/master/getSelectedMaster003CustomerDetail",
-        headers: {
-            "token": token
-        },
-        data: JSON.stringify(test123),
-        success: function (data) {
-            console.log(data);
-        },
-        error: function (e) {
-            alert('서버 연결 도중 에러가 났습니다. 다시 시도해 주십시오.');
-        }
+    //운영일정
+    instance.post('M002004_RES').then(res => {
+        setManageScheduleData(res.data);
     });
 
 </script>

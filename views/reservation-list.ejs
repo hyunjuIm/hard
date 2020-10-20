@@ -16,6 +16,7 @@
           integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
     <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <style>
         ul {
@@ -133,7 +134,7 @@
                         </div>
                     </div>
                     <hr>
-                    <a href="#" class="btn-purple-square modal-toggle5" style="float: right;">검색</a>
+                    <a class="btn-purple-square modal-toggle5" style="float: right;" onclick="searchInformation()">검색</a>
                 </ul>
             </form>
         </div>
@@ -154,9 +155,7 @@
 
     <div class="row " style="margin-left: 30px; margin-right: 30px; margin-top: 20px">
         <form class="table-responsive" style="margin: 0 auto">
-
             <a href="#" class="btn-default-small excel" style="float: right"></a>
-
             <table id="reservationInfos" class="table table-hover" style="margin-top: 45px">
                 <thead>
                 <tr>
@@ -181,6 +180,9 @@
                 </tr>
                 </thead>
                 <tbody>
+                    <tr>
+
+                    </tr>
                 </tbody>
             </table>
         </form>
@@ -208,104 +210,27 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <table class="table">
+                            <table class="table" id="info1">
                                 <tbody>
-                                <tr>
-                                    <th>소속</th>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th>부서</th>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th>성명</th>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th>생년월일</th>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th>연락처</th>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th>주소</th>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th>이메일</th>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th>공단대상</th>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th>듀얼(동의)</th>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th>병원(동의)</th>
-                                    <td></td>
-                                </tr>
                                 </tbody>
                             </table>
 
-                            <table class="table">
+                            <table class="table" id="info2">
                                 <tbody>
-                                <tr>
-                                    <th>1차 예약일</th>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th>2차 예약일</th>
-                                    <td></td>
-                                </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="col">
-                            <table class="table">
+                            <table class="table" id="info3">
                                 <tbody>
-                                <tr>
-                                    <th>예약서비스</th>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th>병원</th>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th>패키지</th>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th>선택검사</th>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th>추가검사</th>
-                                    <td></td>
-                                </tr>
                                 </tbody>
                             </table>
-
-                            <table class="table">
+                            <table class="table" id="info4">
                                 <tbody>
-                                <tr>
-                                    <th>패키지금액</th>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th>회사지원금</th>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <th>본인부담금</th>
-                                    <td></td>
-                                </tr>
+                                </tbody>
+                            </table>
+                            <table class="table" id="info5">
+                                <tbody>
                                 </tbody>
                             </table>
                         </div>
@@ -324,16 +249,64 @@
 </html>
 
 <script type="text/javascript">
+    var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJMU0giLCJleHAiOjE2MDMwOTU5MzJ9.ZrwYNSVhfzpHPxEI01PQ757Z7hvaFr1jDRiEvKFvb7U";
+    const instance = axios.create({
+        baseURL: 'http://192.168.219.101:8080/master/api/v1/',
+        timeout: 1000,
+        headers: {'token': token}
+    });
+    //검색항목리스트
+    instance.post('M003001_RES').then(res => {
+        setReservationSelectData(res.data);
+    });
 
-    var searchItems = new Object();
-    searchItems.servedYear = "all";
-    searchItems.reservationServiceName = "all";
-    searchItems.companyName = "all";
-    searchItems.companyBranch = "all";
-    searchItems.reservationStatus = "all";
-    searchItems.hospitalName = "all";
+    //검색
+    function searchInformation(){
+        var searchItems = new Object();
 
-    //예약관리 select
+        $( '#reservationInfos > tbody').empty();
+
+        searchItems.servedYear = $("#servedYear option:selected").val();
+        searchItems.reservationServiceName = $("#reservationServiceName option:selected").val();
+        searchItems.companyName = $("#companyName option:selected").val();
+        searchItems.companyBranch = $("#companyBranch option:selected").val();
+        searchItems.reservationStatus = $("#reservationStatus option:selected").val();
+        searchItems.hospitalName = $("#hospitalName option:selected").val();
+
+        if(searchItems.servedYear == "-전체-") {
+            searchItems.servedYear = "all";
+        }
+        if(searchItems.reservationServiceName == "-전체-") {
+            searchItems.reservationServiceName = "all";
+        }
+        if(searchItems.companyName == "-전체-") {
+            searchItems.companyName = "all";
+        }
+        if(searchItems.companyBranch == "-전체-") {
+            searchItems.companyBranch = "all";
+        }
+        if(searchItems.reservationStatus == "-전체-") {
+            searchItems.reservationStatus = "all";
+        }
+        if(searchItems.hospitalName == "-전체-") {
+            searchItems.hospitalName = "all";
+        }
+
+        instance.post('M003002_REQ_RES',searchItems).then(res => {
+            setReservationData(res.data);
+        });
+    }
+
+    //고객정보상세
+    function clickDetail(data){
+        var rsvId = Object();
+        rsvId.reservationId = data;
+        instance.post('M003003_REQ_RES',rsvId).then(res => {
+            setDetailCostomerData(res.data);
+        });
+    }
+
+    //예약관리 selector
     function setReservationSelectData(data) {
         //수검연도
         for(i=0; i<data.servedYear.length; i++){
@@ -347,17 +320,35 @@
             html += '<option>'+data.reservationServiceName[i]+'</option>'
             $("#reservationServiceName").append(html);
         }
-        //회사명
-        for(i=0; i<data.companyName.length; i++){
+        //회사
+        if(data.companyName.length > 0) {
+            //회사명 - 지점있을때
+            var jbSplit = data.companyName[0].split('-');
+            var companyName = jbSplit[0];
             var html = '';
-            html += '<option>'+data.companyName[i]+'</option>'
+            html += '<option>' + companyName + '</option>'
             $("#companyName").append(html);
+
+            for(i=0; i<data.companyName.length; i++) {
+                var jbSplit = data.companyName[i].split('-');
+                var companyBranch = jbSplit[jbSplit.length-1];
+                var html = '';
+                html += '<option>'+companyBranch+'</option>'
+                $("#companyBranch").append(html);
+            }
+        } else {
+            //회사명 - 지점없을때
+            for(i=0; i<data.companyName.length; i++) {
+                var html = '';
+                html += '<option>' + data.companyName[i] + '</option>'
+                $("#companyName").append(html);
+            }
         }
-        //지점
-        for(i=0; i<data.companyBranch.length; i++){
+        //진행상태
+        for(i=0; i<data.reservationStatus.length; i++){
             var html = '';
-            html += '<option>'+data.companyBranch[i]+'</option>'
-            $("#companyBranch").append(html);
+            html += '<option>'+data.reservationStatus[i]+'</option>'
+            $("#reservationStatus").append(html);
         }
         //병원명
         for(i=0; i<data.hospitalName.length; i++){
@@ -371,12 +362,12 @@
     function setReservationData(data) {
         for (i = 0; i < data.length; i++) {
             var html = '';
-            html += '<tr data-toggle="modal" data-target="#exampleModal">';
+            html += '<tr>"';
             html += '<td>' + data[i].id + '</td>';
             html += '<td>' + data[i].serviceName + '</td>';
             html += '<td>' + data[i].companyName + '</td>';
             html += '<td>' + data[i].companyBranch + '</td>';
-            html += '<td>' + data[i].familyId + '</td>';
+            html += '<td data-toggle="modal" data-target="#exampleModal" onClick="clickDetail(\'' + data[i].id + '\')">' + data[i].familyId + '</td>';
             html += '<td>' + data[i].familyName + '</td>';
             html += '<td>' + data[i].familyGrade + '</td>';
             html += '<td>' + data[i].familyBirthDate + '</td>';
@@ -385,58 +376,189 @@
             html += '<td>' + data[i].firstWishDate;
             html += '<p>' + data[i].secondWishDate + '</p></td>';
 
-            //TODO : 체크박스
-            if(data[i].ipCheck == 'false'){
-                html += '<td><input class="form-check-input" type="checkbox" value="" id=""></td>'
-            } else {
+            if(data[i].ipCheck) {
+                html += '<td><input class="form-check-input ipCheck" type="checkbox" checked disabled="disabled"></td>';
+            }else {
+                html += '<td><input class="form-check-input ipCheck" type="checkbox" disabled="disabled"></td>';
             }
 
-            html += '<td><input class="form-check-input" type="checkbox" value="" id=""></td>';
             html += '<td>' + data[i].packageName + '</td>';
             html += '<td>' + data[i].packagePrice + '</td>';
             html += '<td>' + data[i].companySupportPrice + '</td>';
-            html += '<td>' + data[i].familyPsInfoCheckDual + '</td>';
-            html += '<td>' + data[i].familyPsInfoCheckHos + '</td>';
-            html += '<td>' + data[i].familyPcDiscount + '</td>';
+
+            if(data[i].familyPsInfoCheckDual) {
+                html += '<td><input class="form-check-input ipCheck" type="checkbox" checked disabled="disabled"></td>';
+            }else {
+                html += '<td><input class="form-check-input ipCheck" type="checkbox" disabled="disabled"></td>';
+            }
+
+            if(data[i].familyPsInfoCheckHos) {
+                html += '<td><input class="form-check-input ipCheck" type="checkbox" checked disabled="disabled"></td>';
+            }else {
+                html += '<td><input class="form-check-input ipCheck" type="checkbox" disabled="disabled"></td>';
+            }
+
+            if(data[i].familyPcDiscount) {
+                html += '<td><input class="form-check-input ipCheck" type="checkbox" checked disabled="disabled"></td>';
+            }else {
+                html += '<td><input class="form-check-input ipCheck" type="checkbox" disabled="disabled"></td>';
+            }
+
             html += '</tr>';
 
             $("#reservationInfos").append(html);
         }
     }
 
-    var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJMU0giLCJleHAiOjE2MDMwOTU5MzJ9.ZrwYNSVhfzpHPxEI01PQ757Z7hvaFr1jDRiEvKFvb7U";
+    //클릭시 고객정보
+    function setDetailCostomerData(data) {
+        $( '#info1 > tbody').empty();
+        $( '#info2 > tbody').empty();
+        $( '#info3 > tbody').empty();
+        $( '#info4 > tbody').empty();
+        $( '#info5 > tbody').empty();
 
-    $.ajax({
-        type: "POST",
-        dataType: "json",
-        contentType: "application/json; charset=utf-8;",
-        url: "http://192.168.219.104:8080/master/getAllMaster003SearchItems",
-        headers: {
-            "token": token
-        },
-        data: JSON.stringify(searchItems),
-        success: function (data) {
-            setReservationSelectData(data);
-        },
-        error: function (e) {
-            alert('서버 연결 도중 에러가 났습니다. 다시 시도해 주십시오.');
-        }
-    });
 
-    $.ajax({
-        type: "POST",
-        dataType: "json",
-        contentType: "application/json; charset=utf-8;",
-        url: "http://192.168.219.104:8080/master/getSelectedMaster003ReservationInfos",
-        headers: {
-            "token": token
-        },
-        data: JSON.stringify(searchItems),
-        success: function (data) {
-            setReservationData(data);
-        },
-        error: function (e) {
-            alert('서버 연결 도중 에러가 났습니다. 다시 시도해 주십시오.');
-        }
-    });
+        var html = "";
+        html +=
+            '<tr>' +
+            '    <th>소속</th>' +
+            '    <td>' + data.companyName + '</td>' +
+            '</tr>' +
+            '<tr>' +
+            '    <th>부서</th>' +
+            '    <td>' + data.companyBranch +'</td>' +
+            '</tr>' +
+            '<tr>' +
+            '    <th>성명</th>' +
+            '    <td>' + data.familyName +'</td>' +
+            '</tr>' +
+            '<tr>' +
+            '    <th>생년월일</th>' +
+            '    <td>' + data.familyBirthDate +'</td>' +
+            '</tr>' +
+            '<tr>' +
+            '    <th>연락처</th>' +
+            '    <td>' + data.familyPhone +'</td>' +
+            '</tr>' +
+            '<tr>' +
+            '    <th>주소</th>' +
+            '    <td>' + data.familyAddress +'</td>' +
+            '</tr>' +
+            '<tr>' +
+            '    <th>이메일</th>' +
+            '    <td>' + data.familyEmail +'</td>' +
+            '</tr>' +
+            '<tr>' +
+            '    <th>공단대상</th>' +
+            '    <td>' + data.familyPcDiscount +'</td>' +
+            '</tr>' +
+            '<tr>' +
+            '    <th>듀얼(동의)</th>' +
+            '    <td>' + data.familyPsInfoDual +'</td>' +
+            '</tr>' +
+            '<tr>' +
+            '    <th>병원(동의)</th>' +
+            '    <td>' + data.familyPsInfoHos +'</td>' +
+            '</tr>'
+        $("#info1").append(html);
+
+        var html = "";
+        html +=
+            '<tr>' +
+            '     <th>예약기간</th>' +
+            '     <td>' + data.packageReservationStartDate + ' ~ ' +data.packageReservationEndDate +'</td>' +
+            ' </tr>' +
+            '<tr>' +
+            '     <th>1차 예약일</th>' +
+            '     <td>' + data.reservationFirstWishDate + '</td>' +
+            ' </tr>' +
+            ' <tr>' +
+            '     <th>2차 예약일</th>' +
+            '     <td>' + data.reservationSecondWishDate + '</td>' +
+            ' </tr>'
+        $("#info2").append(html);
+
+        var html = "";
+        html +=
+            '<tr>' +
+            '    <th>예약서비스</th>' +
+            '    <td>'+ data.packageServiceName +'</td>' +
+            '</tr>' +
+            '<tr>' +
+            '    <th>병원</th>' +
+            '    <td>'+ data.packageHospitalName +'</td>' +
+            '</tr>' +
+            '<tr>' +
+            '    <th>패키지</th>' +
+            '    <td>'+ data.packageName +'</td>' +
+            '</tr>' +
+            '<tr>' +
+            '    <th>선택검사</th>' +
+            '    <td>'+ data.piiClassList +'</td>' +
+            '</tr>' +
+            '<tr>' +
+            '    <th>추가검사</th>' +
+            '    <td>'+ data.piiList +'</td>' +
+            '</tr>'
+        $("#info3").append(html);
+
+        var html = "";
+        html +=
+            '<tr>' +
+            '    <th>패키지금액</th>' +
+            '    <td>'+ data.packagePrice +'</td>' +
+            '</tr>' +
+            '<tr>' +
+            '    <th>회사지원금</th>' +
+            '    <td>'+ data.companySupportPrice +'</td>' +
+            '</tr>' +
+            '<tr>' +
+            '    <th>본인부담금</th>' +
+            '    <td>'+ data.customerPayedPrice +'</td>' +
+            '</tr>'
+        $("#info4").append(html);
+
+        var html = "";
+        html +=
+            '<tr>' +
+            '    <th>메모</th>' +
+            '    <td>'+ data.memo +'</td>' +
+            '</tr>'
+        $("#info5").append(html);
+    }
+
+    if (Meteor.isClient) {
+        Session.setDefault('key', null);
+
+        Template.hello.greeting = function () {
+            return "Welcome to sample.";
+        };
+
+        Template.hello.editing = function () {
+            return Session.get("key");
+        };
+
+        Template.hello.events({
+            'dblclick #greeting': function(e, tmpl) {
+                Session.set("key", true);
+                Deps.flush(); // force DOM redraw, so we can focus the edit field
+                var input = tmpl.find("#edit-input");
+                input.focus();
+                input.select();
+            },
+            'focusout #edit-input' : function(e) {
+                Session.set("key", false);
+            }
+        });
+    }
+
+    if (Meteor.isServer) {
+        Meteor.startup(function () {
+            // code to run on server at startup
+        });
+    }
+
+
+
 </script>
