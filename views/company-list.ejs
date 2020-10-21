@@ -120,7 +120,7 @@
                     </div>
                     <hr>
                     <div style="float: right">
-                        <div class="btn-purple-square" onclick="">
+                        <div class="btn-purple-square" data-toggle="modal" data-target="#companyCreateModal">
                             기업신규등록
                         </div>
                         <div class="btn-save-square"  onclick="searchInformation()">
@@ -179,8 +179,8 @@
 <!--콘텐츠 내용-->
 
 
-<!-- Modal -->
-<div class="modal fade" id="companyDetailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- 기업 상세 정보 Modal -->
+<div class="modal fade" id="companyDetailModal" tabindex="-1" aria-labelledby="companyDetailModalLabel" aria-hidden="true">
     <div class="modal-dialog " style="max-width: fit-content; width: 1200px; display: table;">
         <div class="modal-content">
             <div class="modal-header">
@@ -220,11 +220,19 @@
                                 </tr>
                                 <tr>
                                     <th>예약기간</th>
-                                    <td id="com-reservation" contentEditable="true"></td>
+                                    <td>
+                                        <span id="com-reservationStartDate" contentEditable="true"></span>
+                                        ~
+                                        <span id="com-reservationEndDate" contentEditable="true"></span>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>검진기간</th>
-                                    <td id="com-inspection" contentEditable="true"></td>
+                                    <td>
+                                        <span id="com-inspectionStartDate" contentEditable="true"></span>
+                                        ~
+                                        <span id="com-inspectionEndDate" contentEditable="true"></span>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>서비스이용료</th>
@@ -262,21 +270,31 @@
                                 <div class="menu-title" style="font-size: 22px; margin-bottom: 20px">
                                     <img src="images/bg_h2_tit.png" style="margin-right: 10px;">
                                     담당자추가
-                                    <div class="btn-save-square" style="padding: 2px 6px; font-size: 13px; margin-left: 10px">저장</div>
+                                    <div class="btn-save-square" style="padding: 2px 6px; font-size: 13px; margin-left: 10px"
+                                        onclick="setCompanyManagerData()">저장</div>
                                 </div>
                                 <table class="table" id="info3">
                                     <tbody>
+                                    <!-- 가즈아 -->
                                     <tr>
-                                        <th>이름</th>
-                                        <td id="com-"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>연락처</th>
-                                        <td id="com-"></td>
+                                        <th>회사코드</th>
+                                        <td id="com-companyId"></td>
                                     </tr>
                                     <tr>
                                         <th>이메일</th>
-                                        <td id="com-"></td>
+                                        <td id="com-email" contentEditable="true"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>비밀번호</th>
+                                        <td id="com-password" contentEditable="true"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>이름</th>
+                                        <td id="com-name" contentEditable="true"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>연락처</th>
+                                        <td id="com-phone" contentEditable="true"></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -348,13 +366,133 @@
     </div>
 </div>
 
+<!-- 기업 신규 생성 Modal -->
+<div class="modal fade" id="companyCreateModal" tabindex="-1" aria-labelledby="companyCreateModalLabel" aria-hidden="true">
+    <div class="modal-dialog " style="max-width: fit-content; width: 800px; display: table;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container company" style="margin-top: 30px">
+                    <div class="row">
+                        <div class="col">
+                            <div class="menu-title" style="font-size: 22px; margin-bottom: 20px">
+                                <img src="images/bg_h2_tit.png" style="margin-right: 10px;">
+                                기업정보
+                            </div>
+                            <table class="table" id="info1">
+                                <tbody>
+                                <tr>
+                                    <th>기업명</th>
+                                    <td id="add-com-name" contentEditable="true"></td>
+                                </tr>
+                                <tr>
+                                    <th>사업장</th>
+                                    <td id="add-com-branch" contentEditable="true"></td>
+                                </tr>
+                                <tr>
+                                    <th>시스템오픈</th>
+                                    <td id="add-com-systemOpen" contentEditable="true"></td>
+                                </tr>
+                                <tr>
+                                    <th>계약유무</th>
+                                    <td id="add-com-contract" contentEditable="true"></td>
+                                </tr>
+                                <tr>
+                                    <th>예약기간</th>
+                                    <td>
+                                        <span id="add-com-reservationStartDate" contentEditable="true"></span>
+                                        ~
+                                        <span id="add-com-reservationEndDate" contentEditable="true"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>검진기간</th>
+                                    <td>
+                                        <span id="add-com-inspectionStartDate" contentEditable="true"></span>
+                                        ~
+                                        <span id="add-com-inspectionEndDate" contentEditable="true"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>주소</th>
+                                    <td id="add-com-address" contentEditable="true"></td>
+                                </tr>
+                                <tr>
+                                    <th>이메일</th>
+                                    <td id="add-com-email" contentEditable="true"></td>
+                                </tr>
+                                <tr>
+                                    <th>서비스이용료</th>
+                                    <td id="add-com-rebatePrice" contentEditable="true"></td>
+                                </tr>
+                                <tr>
+                                    <th>공단차감</th>
+                                    <td id="add-com-pcDiscount" contentEditable="true"></td>
+                                </tr>
+                                <tr>
+                                    <th>가족지원</th>
+                                    <td id="add-com-familySupport" contentEditable="true"></td>
+                                </tr>
+                                <tr>
+                                    <th>사업자등록</th>
+                                    <td id="add-com-license" contentEditable="true"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <table class="table" id="info2">
+                                <tbody>
+                                <tr style="height: 200px">
+                                    <th>관리자메모</th>
+                                    <td id="add-com-memo" contentEditable="true"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col">
+                            <div style="margin-bottom: 50px;">
+                                <div class="menu-title" style="font-size: 22px; margin-bottom: 20px">
+                                    <img src="images/bg_h2_tit.png" style="margin-right: 10px;">
+                                    청구정보
+                                </div>
+                                <table class="table" id="info4">
+                                    <tbody>
+                                    <tr>
+                                        <th>청구방식</th>
+                                        <td id="add-com-paymentCode" contentEditable="true"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>지원금방식</th>
+                                        <td id="add-com-supportFundCode" contentEditable="true"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>추가금액<br>정산방식</th>
+                                        <td id="add-com-balanceCode" contentEditable="true"></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-save-square" style="float: right;" onclick="createCompanyData()">저장</div>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
 
 <script type="text/javascript">
     var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJMU0giLCJleHAiOjE2MDMwOTU5MzJ9.ZrwYNSVhfzpHPxEI01PQ757Z7hvaFr1jDRiEvKFvb7U";
     const instance = axios.create({
-        baseURL: "http://192.168.219.101:8080/master/api/v1/",
+        baseURL: "https://api.careroom.kr/master/api/v1/",
         timeout: 1000,
         headers: {'token': token}
     });
@@ -446,7 +584,7 @@
         }
     }
 
-    //고객정보상세
+    //기업 정보 상세
     var cmnId = Object();
 
     function clickDetail(data) {
@@ -464,10 +602,18 @@
         document.getElementById('com-companyName').innerHTML = data.companyName;
         document.getElementById('com-companyBranch').innerHTML = data.companyBranch;
         document.getElementById('com-systemOpen').innerHTML = data.systemOpen;
-        document.getElementById('com-serviceName').innerHTML = data.serviceName;
+
+        var reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
+        var service = "";
+        service = data.serviceName.replace(reg, "");
+
+        document.getElementById('com-serviceName').innerHTML = service;
+
         document.getElementById('com-contract').innerHTML = data.contract;
-        document.getElementById('com-reservation').innerHTML = data.inspectionStartDate + " ~ " + data.inspectionEndDate;
-        document.getElementById('com-inspection').innerHTML = data.reservationStartDate + " ~ " + data.reservationEndDate;
+        document.getElementById('com-reservationStartDate').innerHTML = data.reservationStartDate;
+        document.getElementById('com-reservationEndDate').innerHTML = data.reservationEndDate;
+        document.getElementById('com-inspectionStartDate').innerHTML = data.inspectionStartDate;
+        document.getElementById('com-inspectionEndDate').innerHTML = data.inspectionEndDate;
         document.getElementById('com-rebatePrice').innerHTML = data.rebatePrice;
         document.getElementById('com-packagePriceList').innerHTML = data.packagePriceList;
         document.getElementById('com-supportPriceList').innerHTML = data.supportPriceList;
@@ -478,6 +624,7 @@
         document.getElementById('com-memo').innerHTML = data.memo;
 
         //info3 담당자추가
+        document.getElementById('com-companyId').innerHTML = cmnId.companyId;
 
         //info4 청구정보
         document.getElementById('com-paymentCode').innerHTML = data.paymentCode;
@@ -489,6 +636,7 @@
         document.getElementById('com-fsupportPriceList').innerHTML = data.fsupportPriceList;
 
         //info6 담장자정보
+        $("#info6").empty();
         for (i = 0; i < data.companyManagerDTOList.length; i++) {
             var html = '';
             html += '<tr style="border-top: 2px solid #424242">';
@@ -508,29 +656,97 @@
         }
     }
 
-    //수정된 정보로 저장
-    function saveInformation() {
+    //담당자 추가
+    function setCompanyManagerData() {
         var saveItems = new Object();
 
-        saveItems.reservationId = rsvId.reservationId;
-        saveItems.familyName = document.getElementById('com-familyName').innerText;
-        saveItems.familyBirthDate = document.getElementById('com-familyBirthDate').innerText;
-        saveItems.familyPhone = document.getElementById('com-familyPhone').innerText;
-        saveItems.familyAddress = document.getElementById('com-familyAddress').innerText;
-        saveItems.familyEmail = document.getElementById('com-familyEmail').innerText;
-        saveItems.familyPcDiscount = document.getElementById('com-familyPcDiscount').innerText;
-        saveItems.familyPsInfoDual = document.getElementById('com-familyPsInfoDual').innerText;
-        saveItems.familyPsInfoHos = document.getElementById('com-familyPsInfoHos').innerText;
-        saveItems.reservationFirstWishDate = document.getElementById('com-reservationFirstWishDate').innerText;
-        saveItems.reservationSecondWishDate = document.getElementById('com-reservationSecondWishDate').innerText;
-        saveItems.ipDate = document.getElementById('com-ipDate').innerText;
-        saveItems.companySupportPrice = document.getElementById('com-companySupportPrice').innerText;
-        saveItems.memo = document.getElementById('com-memo').innerText;
+        saveItems.companyId = document.getElementById('com-companyId').innerText;
+        saveItems.email = document.getElementById('com-email').innerText;
+        saveItems.password = document.getElementById('com-password').innerText;
+        saveItems.name = document.getElementById('com-name').innerText;
+        saveItems.phone = document.getElementById('com-phone').innerText;
 
         console.log(saveItems);
 
         if (confirm("저장하시겠습니까?") == true){
-            instance.post('M003004_REQ_RES', saveItems).then(res => {
+            instance.post('M004004_REQ', saveItems).then(res => {
+                console.log(res.data.message);
+                if(res.data.message == "success") {
+                    alert("저장되었습니다.");
+                    clickDetail(saveItems.companyId);
+                    document.getElementById('com-companyId').innerHTML = "";
+                    document.getElementById('com-email').innerHTML = "";
+                    document.getElementById('com-password').innerHTML = "";
+                    document.getElementById('com-name').innerHTML = "";
+                    document.getElementById('com-phone').innerHTML = "";
+                }
+            });
+        }else{
+            return false;
+        }
+    }
+
+    //기업 신규 등록
+    function createCompanyData() {
+        var saveItems = new Object();
+
+        saveItems.name = document.getElementById('add-com-name').innerText;
+        saveItems.branch = document.getElementById('add-com-branch').innerText;
+        saveItems.systemOpen = document.getElementById('add-com-systemOpen').innerText;
+        saveItems.contract = document.getElementById('add-com-contract').innerText;
+        saveItems.address = document.getElementById('add-com-address').innerText;
+        saveItems.email = document.getElementById('add-com-email').innerText;
+        saveItems.rebatePrice = document.getElementById('add-com-rebatePrice').innerText;
+        saveItems.pcDiscount = document.getElementById('add-com-pcDiscount').innerText;
+        saveItems.paymentCode = document.getElementById('add-com-paymentCode').innerText;
+        saveItems.supportFundCode = document.getElementById('add-com-supportFundCode').innerText;
+        saveItems.balanceCode = document.getElementById('add-com-balanceCode').innerText;
+        saveItems.familySupport = document.getElementById('add-com-familySupport').innerText;
+        saveItems.license = document.getElementById('add-com-license').innerText;
+        saveItems.memo = document.getElementById('add-com-memo').innerText;
+        saveItems.reservationStartDate = document.getElementById('add-com-reservationStartDate').innerText;
+        saveItems.reservationEndDate = document.getElementById('add-com-reservationEndDate').innerText;
+        saveItems.inspectionStartDate = document.getElementById('add-com-inspectionStartDate').innerText;
+        saveItems.inspectionEndDate = document.getElementById('add-com-inspectionEndDate').innerText;
+
+
+        console.log(saveItems);
+
+        if (confirm("저장하시겠습니까?") == true){
+            instance.post('M004006_REQ', saveItems).then(res => {
+                console.log(res.data.message);
+                alert("저장되었습니다.");
+            });
+        }else{
+            return false;
+        }
+    }
+
+    //수정된 정보로 저장
+    function saveInformation() {
+        var saveItems = new Object();
+
+        saveItems.companyId = cmnId.companyId;
+        saveItems.companyName = document.getElementById('com-companyName').innerText;
+        saveItems.companyBranch = document.getElementById('com-companyBranch').innerText;
+        saveItems.systemOpen = document.getElementById('com-systemOpen').innerText;
+        saveItems.contract = document.getElementById('com-contract').innerText;
+        saveItems.reservationStartDate = document.getElementById('com-reservationStartDate').innerText;
+        saveItems.reservationEndDate = document.getElementById('com-reservationEndDate').innerText;
+        saveItems.inspectionStartDate = document.getElementById('com-inspectionStartDate').innerText;
+        saveItems.inspectionEndDate = document.getElementById('com-inspectionEndDate').innerText;
+        saveItems.rebatePrice = document.getElementById('com-rebatePrice').innerText;
+        saveItems.pcDiscount = document.getElementById('com-pcDiscount').innerText;
+        saveItems.familySupport = document.getElementById('com-familySupport').innerText;
+        saveItems.memo = document.getElementById('com-memo').innerText;
+        saveItems.paymentCode = document.getElementById('com-paymentCode').innerText;
+        saveItems.supportFundCode = document.getElementById('com-supportFundCode').innerText;
+        saveItems.balanceCode = document.getElementById('com-balanceCode').innerText;
+
+        console.log(saveItems);
+
+        if (confirm("저장하시겠습니까?") == true){
+            instance.post('M004005_REQ', saveItems).then(res => {
                 console.log(res.data.message);
                 alert("저장되었습니다.");
             });
