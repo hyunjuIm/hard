@@ -16,5 +16,10 @@ router.get('/company-list', function(req, res, next) {
   res.render('company-list');
 });
 
+//병원관리
+router.get('/hospital-list', function(req, res, next) {
+  res.render('hospital-list');
+});
+
 
 module.exports = router;

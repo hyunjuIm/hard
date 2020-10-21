@@ -4,6 +4,11 @@ html, body {
   background-color: #f6f6f6;
 }
 
+a:link {
+  text-decoration: none;
+  cursor: pointer;
+}
+
 th, tr, td {
   text-align: center;
   vertical-align: center;
@@ -16,11 +21,19 @@ th, tr, td {
   align-items: center;
 }
 
+table {
+  text-align: center;
+  margin: auto;
+  vertical-align: middle;
+  border-collapse: collapse;
+  line-height: 30px;
+  border-bottom: #E6E6E6 1px solid;
+}
+
 .btn-purple-square {
+  cursor: pointer;
   display: inline-block;
-  height: 36px;
-  line-height: 36px;
-  padding: 0 20px;
+  padding: 8px 20px;
   background: #3529b1;
   text-align: center;
   color: #fff;
@@ -28,11 +41,21 @@ th, tr, td {
   text-decoration: none;
 }
 
-.btn-save-square {
+.btn-light-purple-square {
+  cursor: pointer;
   display: inline-block;
-  height: 36px;
-  line-height: 36px;
-  padding: 0 20px;
+  padding: 8px 20px;
+  background: #5645ED;
+  text-align: center;
+  color: #fff;
+  font-size: 15px;
+  text-decoration: none;
+}
+
+.btn-save-square {
+  cursor: pointer;
+  display: inline-block;
+  padding: 8px 20px;
   background: #424242;
   text-align: center;
   color: #fff;
@@ -131,8 +154,4 @@ ul.img-circle li {
 
 .search-icon:hover {
   color: #fff !important
-}
-
-a:link {
-  text-decoration: none
 }

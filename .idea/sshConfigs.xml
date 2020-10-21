@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig host="13.125.199.226" id="e3e75637-69ed-4e24-9b4c-3feee79a181d" keyPath="C:\Users\HyunjuIm\Desktop\A\dual_health.ppk" port="22" nameFormat="DESCRIPTIVE" username="ubuntu" />
+    </configs>
+  </component>
+</project>

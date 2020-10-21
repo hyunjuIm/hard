@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="488d1446-3cf5-4293-bb5f-83a3974e5faa" name="dual_front" url="https://master.dualhealth.co.kr/">
+        <fileTransfer rootFolder="/home/master" accessType="SFTP" host="13.125.199.226" port="22" sshConfigId="e3e75637-69ed-4e24-9b4c-3feee79a181d" sshConfig="ubuntu@13.125.199.226:22 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
