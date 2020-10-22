@@ -10,8 +10,6 @@ a:link {
 }
 
 th, tr, td {
-  text-align: center;
-  vertical-align: center;
   margin: 0 auto;
 }
 
@@ -24,7 +22,6 @@ th, tr, td {
 table {
   text-align: center;
   margin: auto;
-  vertical-align: middle;
   border-collapse: collapse;
   line-height: 30px;
   border-bottom: #E6E6E6 1px solid;
@@ -150,6 +147,8 @@ ul.img-circle li {
   border: 0;
   outline: 0;
   background : url('../images/btn_search.png') left center no-repeat;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .search-icon:hover {

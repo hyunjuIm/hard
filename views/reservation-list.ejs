@@ -2,54 +2,8 @@
 <html>
 <head>
     <title>듀얼헬스케어:예약관리</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-            integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.polyfill.io/v3/polyfill.min.js?features=default,Array.prototype.includes,Array.prototype.find"></script>
-    <!--for ajax-->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <link rel='stylesheet' href='/stylesheets/style.css'/>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-    <style>
-        ul {
-            list-style: none;
-        }
-
-        .col-form-label {
-            font-size: 18px;
-            min-width: 130px;
-        }
-
-        th {
-            width: 130px;
-            background: #E6E6E6;
-            color: #444444;
-        }
-
-        tr {
-            color: #444;
-        }
-
-        td {
-            width: auto;
-            border: 1px;
-            solid: #efefef;
-            font-size: 15px;
-        }
-
-    </style>
+    <% include menu-head %>
 
 </head>
 
@@ -141,8 +95,8 @@
                 <h6>
                     <div style="margin-right: 15px">통합검색</div>
                     <div class="search">
-                        <input type="text" class="search-input" placeholder="사원번호, 이름으로 검색하세요" name="">
-                        <div class="search-icon"><i class="fa fa-search"></i></div>
+                        <input type="text" class="search-input" id="searchWord" placeholder="사원번호, 이름으로 검색하세요">
+                        <div class="search-icon" onclick="searchInformation()"></div>
                     </div>
                 </h6>
             </div>
@@ -177,9 +131,6 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-
-                </tr>
                 </tbody>
             </table>
         </form>
@@ -190,7 +141,7 @@
 <!--콘텐츠 내용-->
 
 
-<!-- Modal -->
+<!-- 고객 상세 정보 Modal -->
 <div class="modal fade" id="customerModal" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
     <div class="modal-dialog " style="max-width: 100%; width: auto; display: table;">
         <div class="modal-content">
@@ -239,15 +190,48 @@
                                 </tr>
                                 <tr>
                                     <th>공단대상</th>
-                                    <td id="cus-familyPcDiscount" contentEditable="true"></td>
+                                    <td id="cus-familyPcDiscount">
+                                        <div class="form-check form-check-inline">
+                                            <label class="form-check-label" for="familyPcDiscountYes">YES&nbsp</label>
+                                            <input class="form-check-input" type="checkbox" id="familyPcDiscountYes"
+                                                   value="">
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <label class="form-check-label" for="familyPcDiscountNo">NO&nbsp</label>
+                                            <input class="form-check-input" type="checkbox" id="familyPcDiscountNo"
+                                                   value="">
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>듀얼(동의)</th>
-                                    <td id="cus-familyPsInfoDual" contentEditable="true"></td>
+                                    <td id="cus-familyPsInfoDual">
+                                        <div class="form-check form-check-inline">
+                                            <label class="form-check-label" for="familyPsInfoDualYes">YES&nbsp</label>
+                                            <input class="form-check-input" type="checkbox" id="familyPsInfoDualYes"
+                                                   value="">
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <label class="form-check-label" for="familyPsInfoDualNo">NO&nbsp</label>
+                                            <input class="form-check-input" type="checkbox" id="familyPsInfoDualNo"
+                                                   value="">
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <th>병원(동의)</th>
-                                    <td id="cus-familyPsInfoHos" contentEditable="true"></td>
+                                    <td id="cus-familyPsInfoHos">
+                                        <div class="form-check form-check-inline">
+                                            <label class="form-check-label" for="familyPsInfoHosYes">YES&nbsp</label>
+                                            <input class="form-check-input" type="checkbox" id="familyPsInfoHosYes"
+                                                   value="">
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <label class="form-check-label" for="familyPsInfoHosNo">NO&nbsp</label>
+                                            <input class="form-check-input" type="checkbox" id="familyPsInfoHosNo"
+                                                   value="">
+                                        </div>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -351,12 +335,7 @@
 </html>
 
 <script type="text/javascript">
-    var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJMU0giLCJleHAiOjE2MDMwOTU5MzJ9.ZrwYNSVhfzpHPxEI01PQ757Z7hvaFr1jDRiEvKFvb7U";
-    const instance = axios.create({
-        baseURL: "http://192.168.219.101:8080/master/api/v1/",
-        timeout: 1000,
-        headers: {'token': token}
-    });
+
     //검색항목리스트
     instance.post('M003001_RES').then(res => {
         setReservationSelectData(res.data);
@@ -375,6 +354,8 @@
         searchItems.companyBranch = $("#companyBranch option:selected").val();
         searchItems.reservationStatus = $("#reservationStatus option:selected").val();
         searchItems.hospitalName = $("#hospitalName option:selected").val();
+
+        searchItems.searchWord =  $("#searchWord").val();
 
         if (searchItems.servedYear == "-전체-") {
             searchItems.servedYear = "all";
@@ -396,6 +377,7 @@
         }
 
         instance.post('M003002_REQ_RES', searchItems).then(res => {
+            console.log(searchItems);
             setReservationData(res.data);
         });
     }
@@ -472,9 +454,9 @@
             html += '<p> 2차 : ' + data[i].secondWishDate + '</td>';
 
             if (data[i].ipCheck) {
-                html += '<td><input class="form-check-input ipCheck" type="checkbox" checked disabled="disabled"></td>';
+                html += '<td>Y</td>';
             } else {
-                html += '<td><input class="form-check-input ipCheck" type="checkbox" disabled="disabled"></td>';
+                html += '<td>N</td>';
             }
 
             html += '<td>' + data[i].packageName + '</td>';
@@ -482,21 +464,21 @@
             html += '<td>' + data[i].companySupportPrice + '</td>';
 
             if (data[i].familyPsInfoCheckDual) {
-                html += '<td><input class="form-check-input ipCheck" type="checkbox" checked disabled="disabled"></td>';
+                html += '<td>Y</td>';
             } else {
-                html += '<td><input class="form-check-input ipCheck" type="checkbox" disabled="disabled"></td>';
+                html += '<td>N</td>';
             }
 
             if (data[i].familyPsInfoCheckHos) {
-                html += '<td><input class="form-check-input ipCheck" type="checkbox" checked disabled="disabled"></td>';
+                html += '<td>Y</td>';
             } else {
-                html += '<td><input class="form-check-input ipCheck" type="checkbox" disabled="disabled"></td>';
+                html += '<td>N</td>';
             }
 
             if (data[i].familyPcDiscount) {
-                html += '<td><input class="form-check-input ipCheck" type="checkbox" checked disabled="disabled"></td>';
+                html += '<td>Y</td>';
             } else {
-                html += '<td><input class="form-check-input ipCheck" type="checkbox" disabled="disabled"></td>';
+                html += '<td>N</td>';
             }
 
             html += '</tr>';
@@ -527,9 +509,28 @@
         document.getElementById('cus-familyPhone').innerHTML = data.familyPhone;
         document.getElementById('cus-familyAddress').innerHTML = data.familyAddress;
         document.getElementById('cus-familyEmail').innerHTML = data.familyEmail;
-        document.getElementById('cus-familyPcDiscount').innerHTML = data.familyPcDiscount;
-        document.getElementById('cus-familyPsInfoDual').innerHTML = data.familyPsInfoDual;
-        document.getElementById('cus-familyPsInfoHos').innerHTML = data.familyPsInfoHos;
+
+        if(data.familyPcDiscount) {
+            $("input:checkbox[id='familyPcDiscountYes']").prop("checked", true);
+            $("input:checkbox[id='familyPcDiscountNo']").prop("checked", false);
+        } else {
+            $("input:checkbox[id='familyPcDiscountYes']").prop("checked", false);
+            $("input:checkbox[id='familyPcDiscountNo']").prop("checked", true);
+        }
+        if(data.familyPsInfoDual) {
+            $("input:checkbox[id='familyPsInfoDualYes']").prop("checked", true);
+            $("input:checkbox[id='familyPsInfoDualNo']").prop("checked", false);
+        } else {
+            $("input:checkbox[id='familyPsInfoDualYes']").prop("checked", false);
+            $("input:checkbox[id='familyPsInfoDualNo']").prop("checked", true);
+        }
+        if(data.familyPsInfoHos) {
+            $("input:checkbox[id='familyPsInfoHosYes']").prop("checked", true);
+            $("input:checkbox[id='familyPsInfoHosNo']").prop("checked", false);
+        } else {
+            $("input:checkbox[id='familyPsInfoHosYes']").prop("checked", false);
+            $("input:checkbox[id='familyPsInfoHosNo']").prop("checked", true);
+        }
 
         //info2
         document.getElementById('cus-packageReservation').innerHTML

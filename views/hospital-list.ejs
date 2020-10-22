@@ -2,64 +2,8 @@
 <html>
 <head>
     <title>듀얼헬스케어:병원관리</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-            crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-            integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-            crossorigin="anonymous"></script>
-    <script src="https://cdn.polyfill.io/v3/polyfill.min.js?features=default,Array.prototype.includes,Array.prototype.find"></script>
-    <!--for ajax-->
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <link rel='stylesheet' href='/stylesheets/style.css'/>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-    <style>
-        ul {
-            list-style: none;
-        }
-
-        .col-form-label {
-            font-size: 18px;
-            min-width: 130px;
-        }
-
-        table {
-            text-align: center;
-            margin: auto;
-            vertical-align: middle;
-            border-collapse: collapse;
-            line-height: 30px;
-            border-bottom: #E6E6E6 1px solid;
-        }
-
-        th {
-            width: 130px;
-            background: #E6E6E6;
-            color: #444444;
-        }
-
-        tr {
-            color: #444;
-        }
-
-        td {
-            width: auto;
-            border: 1px;
-            solid: #efefef;
-            font-size: 15px;
-            vertical-align: middle;
-        }
-
-    </style>
+    <% include menu-head %>
 
 </head>
 
@@ -102,10 +46,10 @@
                     </div>
                     <div class="form-row row">
                         <label class="col-form-label">
-                            <li>진행상태</li>
+                            <li>지역</li>
                         </label>
                         <div class="form-group col">
-                            <select id="status" class="form-control">
+                            <select id="place" class="form-control">
                                 <option selected>-전체-</option>
                             </select>
                         </div>
@@ -120,8 +64,8 @@
                     </div>
                     <hr>
                     <div style="float: right">
-                        <div class="btn-purple-square" onclick="">
-                            기업신규등록
+                        <div class="btn-purple-square" data-toggle="modal" data-target="#hospitalCreateModal">
+                            병원신규등록
                         </div>
                         <div class="btn-save-square"  onclick="searchInformation()">
                             검색
@@ -138,8 +82,8 @@
                 <h6>
                     <div style="margin-right: 15px">통합검색</div>
                     <div class="search">
-                        <input type="text" class="search-input" placeholder="회사명으로 검색하세요" name="">
-                        <div class="search-icon"><i class="fa fa-search"></i></div>
+                        <input type="text" id="searchWord" class="search-input" placeholder="병원명으로 검색하세요">
+                        <div class="search-icon" onclick="searchInformation()"></div>
                     </div>
                 </h6>
             </div>
@@ -150,24 +94,20 @@
         <form class="table-responsive" style="margin: 0 auto">
             <div
                     class="btn-default-small excel" style="float: right"></div>
-            <table id="compamynInfos" class="table table-hover" style="margin-top: 45px">
+            <table id="hospitalInfo" class="table table-hover" style="margin-top: 45px">
                 <thead>
-                <tr data-toggle="modal" data-target="#companyDetailModal">
-                    <th scope="col">NO</th>
-                    <th scope="col">회사</th>
-                    <th scope="col">사업장</th>
-                    <th scope="col">계약유무</th>
-                    <th scope="col">직원 수</th>
-                    <th scope="col">진행현황</th>
-                    <th scope="col">예약기간</th>
-                    <th scope="col">검진기간</th>
-                    <th scope="col">사업자 등록</th>
+                <tr>
+                    <th>NO</th>
+                    <th>병원명</th>
+                    <th>지역</th>
+                    <th>서비스</th>
+                    <th>계약유무</th>
+                    <th>사업자등록</th>
+                    <th>통장사본</th>
+                    <th>장비현황</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-
-                </tr>
                 </tbody>
             </table>
         </form>
@@ -178,9 +118,9 @@
 <!--콘텐츠 내용-->
 
 
-<!-- Modal -->
-<div class="modal fade" id="companyDetailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog " style="max-width: 100%; width: auto; display: table;">
+<!-- 병원 상세 정보 Modal -->
+<div class="modal fade" id="hospitalDetailModal" tabindex="-1" aria-labelledby="hospitalDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog " style="max-width: fit-content; width: 1000px; display: table;">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -188,147 +128,190 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="container company" style="margin-top: 30px">
-                    <div class="row" style="width: 800px">
+                <div class="container hospital" style="margin-top: 30px">
+                    <div class="row">
                         <div class="col">
                             <div class="menu-title" style="font-size: 22px; margin-bottom: 20px">
                                 <img src="images/bg_h2_tit.png" style="margin-right: 10px;">
-                                기업정보
+                                병원정보
                             </div>
                             <table class="table" id="info1">
                                 <tbody>
                                 <tr>
-                                    <th>기업명</th>
-                                    <td id="cus-companyName"></td>
+                                    <th>병원명</th>
+                                    <td id="hos-name" contentEditable="true"></td>
                                 </tr>
                                 <tr>
-                                    <th>사업장</th>
-                                    <td id="cus-companyBranch"></td>
+                                    <th>지역</th>
+                                    <td id="hos-place"></td>
                                 </tr>
                                 <tr>
-                                    <th>시스템오픈</th>
-                                    <td id="cus-familyName" contentEditable="true"></td>
+                                    <th>주소</th>
+                                    <td id="hos-address" contentEditable="true"></td>
                                 </tr>
                                 <tr>
-                                    <th>서비스</th>
-                                    <td id="cus-familyBirthDate" contentEditable="true"></td>
+                                    <th>대표번호</th>
+                                    <td id="hos-phone" contentEditable="true"></td>
                                 </tr>
                                 <tr>
-                                    <th>계약유무</th>
-                                    <td id="cus-familyPhone" contentEditable="true"></td>
-                                </tr>
-                                <tr>
-                                    <th>예약기간</th>
-                                    <td id="cus-familyAddress" contentEditable="true"></td>
-                                </tr>
-                                <tr>
-                                    <th>검진기간</th>
-                                    <td id="cus-familyEmail" contentEditable="true"></td>
-                                </tr>
-                                <tr>
-                                    <th>서비스이용료</th>
-                                    <td id="cus-familyPcDiscount" contentEditable="true"></td>
-                                </tr>
-                                <tr>
-                                    <th>패키지</th>
-                                    <td id="cus-familyPsInfoDual" contentEditable="true"></td>
-                                </tr>
-                                <tr>
-                                    <th>지원금</th>
-                                    <td id="cus-familyPsInfoHos" contentEditable="true"></td>
+                                    <th>사업자번호</th>
+                                    <td id="hos-licenseNum" contentEditable="true"></td>
                                 </tr>
                                 <tr>
                                     <th>공단차감</th>
-                                    <td id="cus-familyPsInfoHos" contentEditable="true"></td>
+                                    <td id="hos-pcDiscount" contentEditable="true"></td>
                                 </tr>
                                 <tr>
-                                    <th>가족지원</th>
-                                    <td id="cus-familyPsInfoHos" contentEditable="true"></td>
+                                    <th>공단금액</th>
+                                    <td id="hos-pcPrice" contentEditable="true"></td>
                                 </tr>
-                                </tbody>
-                            </table>
-                            <table class="table" id="info2">
-                                <tbody>
-                                <tr style="height: 200px">
-                                    <th>관리자메모</th>
-                                    <td id="cus-familyPsInfoHos" contentEditable="true"></td>
+                                <tr>
+                                    <th>시스템오픈</th>
+                                    <td id="hos-systemOpen" contentEditable="true"></td>
+                                </tr>
+                                <tr>
+                                    <th>가능서비스</th>
+                                    <td id="hos-services"></td>
+                                </tr>
+                                <tr>
+                                    <th>계약유무</th>
+                                    <td id="hos-contract" contentEditable="true"></td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="col">
-                            <div class="row" style="margin-bottom: 50px;">
+                            <div style="margin-bottom: 40px;">
                                 <div class="menu-title" style="font-size: 22px; margin-bottom: 20px">
                                     <img src="images/bg_h2_tit.png" style="margin-right: 10px;">
-                                    담당자정보
-                                    <div class="btn-save-square" style="padding: 2px 6px; font-size: 13px; margin-left: 10px">추가</div>
+                                    첨부서식
+                                    <div class="btn-light-purple-square"
+                                         style="padding: 2px 6px; font-size: 12px; margin-left: 10px; border-radius: 20px"
+                                         onclick="">upload</div>
                                 </div>
-                                <table class="table" id="info3">
-                                    <tbody>
+                                <div class="table" id="info2">
+                                    <ul class="img-circle">
+                                        <li><a href="#">사업자등록증</a></li>
+                                        <li><a href="#">통장사본</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="menu-title" style="font-size: 22px; margin-bottom: 20px">
+                                <img src="images/bg_h2_tit.png" style="margin-right: 10px;">
+                                담당자추가
+                                <div class="btn-save-square" style="padding: 2px 6px; font-size: 13px; margin-left: 10px"
+                                     onclick="setHospitalManagerData()">저장</div>
+                            </div>
+                            <table class="table" id="info3">
+                                <tbody>
+                                <tr>
+                                    <th>부서</th>
+                                    <td id="add-hos-res-department" contentEditable="true"></td>
+                                </tr>
+                                <tr>
+                                    <th>이메일</th>
+                                    <td id="add-hos-res-email" contentEditable="true"></td>
+                                </tr>
+                                <tr>
+                                    <th>비밀번호</th>
+                                    <td id="add-hos-res-password" contentEditable="true"></td>
+                                </tr>
+                                <tr>
+                                    <th>이름</th>
+                                    <td id="add-hos-res-name" contentEditable="true"></td>
+                                </tr>
+                                <tr>
+                                    <th>직통번호</th>
+                                    <td id="add-hos-res-phone" contentEditable="true"></td>
+                                </tr>
+                                <tr>
+                                    <th>개인연락처</th>
+                                    <td id="add-hos-res-directPhone" contentEditable="true"></td>
+                                </tr>
+                                <tr>
+                                    <th>직함</th>
+                                    <td id="add-hos-res-position" contentEditable="true"></td>
+                                </tr>
+                                <tr>
+                                    <th>SMS수신여부</th>
+                                    <td id="add-hos-res-receiveSMS" contentEditable="true"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col" aria-colspan="2">
+                            <div class="menu-title" style="font-size: 22px; margin-bottom: 20px; margin-top: 20px">
+                                <img src="images/bg_h2_tit.png" style="margin-right: 10px;">
+                                담당자정보
+                            </div>
+
+                            <div style="height: 200px; overflow-y: scroll">
+                                <table id="info4" class="table table-hover">
+                                    <thead>
                                     <tr>
+                                        <th>담당자 정보</th>
                                         <th>이름</th>
-                                        <td id="cus-packageServiceName"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>연락처</th>
-                                        <td id="cus-packageHospitalName"></td>
-                                    </tr>
-                                    <tr>
+                                        <th>직함</th>
+                                        <th>직통번호</th>
+                                        <th>휴대전화번호</th>
                                         <th>이메일</th>
-                                        <td id="cus-packageName"></td>
+                                        <th>sms수신여부</th>
                                     </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div class="row" style="margin-bottom: 50px;">
-                                <div class="menu-title" style="font-size: 22px; margin-bottom: 20px">
-                                    <img src="images/bg_h2_tit.png" style="margin-right: 10px;">
-                                    청구정보
-                                </div>
-                                <table class="table" id="info4">
+                                    </thead>
                                     <tbody>
-                                    <tr>
-                                        <th>청구방식</th>
-                                        <td id="cus-packageServiceName"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>지원금방식</th>
-                                        <td id="cus-packageHospitalName"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>추가금액<br>정산방식</th>
-                                        <td id="cus-packageName"></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div class="row" >
-                                <div class="menu-title" style="font-size: 22px; margin-bottom: 20px">
-                                    <img src="images/bg_h2_tit.png" style="margin-right: 10px;">
-                                    가족미지원
-                                </div>
-                                <table class="table" id="info5">
-                                    <tbody>
-                                    <tr>
-                                        <th>패키지</th>
-                                        <td id="cus-memo" contentEditable="true"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>지원금</th>
-                                        <td id="cus-memo" contentEditable="true"></td>
-                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="modal-footer">
                 <div class="btn-save-square" style="float: right;" onclick="saveInformation()">저장</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 장비현황 Modal -->
+<div class="modal fade" id="hospitalEquipmentModal" tabindex="-1" aria-labelledby="hospitalEquipmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog " style="max-width: fit-content; width: 1200px; display: table;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div style="float: right; margin-bottom: 5px">
+                    <div class="btn-save-square" style="font-size: 14px; font-weight: bold"
+                         onclick="addHospitalEquipment()">추가</div>
+                    <div class="btn-save-square" style="font-size: 14px; font-weight: bold"
+                         onclick="delHospitalEquipment()">삭제</div>
+                </div>
+                <table id="hospitalEquipmentInfo" class="table table-hover table-bordered">
+                    <thead>
+                    <tr style="width: 100%">
+                        <th style="width: 4%">
+                            <input type="checkbox" class="chk" name="chk" id="eqCheckAll"/>
+                        </th>
+                        <th style="width: 20%">의료장비명</th>
+                        <th style="width: 20%">모델명</th>
+                        <th style="width: 20%">용도</th>
+                        <th style="width: 7%">수량</th>
+                        <th style="width: 7%">도입년도</th>
+                        <th style="width: 13%">비고</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-save-square" style="float: right;" onclick="saveEquipmentInformation()">저장</div>
             </div>
         </div>
     </div>
@@ -338,28 +321,24 @@
 </html>
 
 <script type="text/javascript">
-    var token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJMU0giLCJleHAiOjE2MDMwOTU5MzJ9.ZrwYNSVhfzpHPxEI01PQ757Z7hvaFr1jDRiEvKFvb7U";
-    const instance = axios.create({
-        baseURL: "http://192.168.219.101:8080/master/api/v1/",
-        timeout: 1000,
-        headers: {'token': token}
-    });
-    //검색항목리스트
-    instance.post('M004001_RES').then(res => {
-        setCompanySelectData(res.data);
-    });
 
+    //검색항목리스트
+    instance.post('M005001_RES').then(res => {
+        setHospitalSelectData(res.data);
+    });
 
     //검색
     function searchInformation() {
         var searchItems = new Object();
 
-        $('#compamynInfos > tbody').empty();
+        $('#hospitalInfo > tbody').empty();
 
         searchItems.year = $("#year option:selected").val();
         searchItems.service = $("#service option:selected").val();
-        searchItems.status = $("#status option:selected").val();
+        searchItems.place = $("#place option:selected").val();
         searchItems.contract = $("#contract option:selected").val();
+
+        searchItems.searchWord =  $("#searchWord").val();
 
         if (searchItems.year == "-전체-") {
             searchItems.year = "all";
@@ -367,20 +346,22 @@
         if (searchItems.service == "-전체-") {
             searchItems.service = "all";
         }
-        if (searchItems.status == "-전체-") {
-            searchItems.status = "all";
+        if (searchItems.place == "-전체-") {
+            searchItems.place = "all";
         }
         if (searchItems.contract == "-전체-") {
             searchItems.contract = "all";
         }
 
-        instance.post('M004002_REQ_RES', searchItems).then(res => {
-            setCompanyData(res.data);
+        console.log(searchItems);
+
+        instance.post('M005002_REQ_RES', searchItems).then(res => {
+            setHospitalData(res.data);
         });
     }
 
     //검색 selector
-    function setCompanySelectData(data) {
+    function setHospitalSelectData(data) {
         console.log(data);
         //사업연도
         for (i = 0; i < data.year.length; i++) {
@@ -394,11 +375,11 @@
             html += '<option>' + data.service[i] + '</option>'
             $("#service").append(html);
         }
-        //진행상태
-        for (i = 0; i < data.status.length; i++) {
+        //지역
+        for (i = 0; i < data.place.length; i++) {
             var html = '';
-            html += '<option>' + data.status[i] + '</option>'
-            $("#status").append(html);
+            html += '<option>' + data.place[i] + '</option>'
+            $("#place").append(html);
         }
         //계약유무
         for (i = 0; i < data.contract.length; i++) {
@@ -408,82 +389,201 @@
         }
     }
 
-    //예약관리 테이블
-    function setCompanyData(data) {
+    //병원관리 테이블
+    function setHospitalData(data) {
+        console.log(data);
         for (i = 0; i < data.length; i++) {
             var html = '';
             html += '<tr>"';
             html += '<td>' + data[i].id + '</td>';
-            html += '<td>' + data[i].name + '</td>';
-            html += '<td>' + data[i].branch + '</td>';
+            html += '<td data-toggle="modal" data-target="#hospitalDetailModal" onClick="clickDetail(\'' + data[i].id + '\')">' + data[i].name + '</td>';
+            html += '<td>' + data[i].place + '</td>';
             html += '<td>' + data[i].services + '</td>';
-            html += '<td data-toggle="modal" data-target="#companyDetailModal" onClick="clickDetail(\'' + data[i].id + '\')">' + data[i].contract + '</td>';
-            html += '<td>' + data[i].customers + '</td>';
-            html += '<td>' + data[i].status + '</td>';
-            html += '<td>' + data[i].license + '</td>';
+            if (data[i].contract) {
+                html += '<td>Y</td>';
+            } else {
+                html += '<td>N</td>';
+            }
+            if (data[i].license) {
+                html += '<td>Y</td>';
+            } else {
+                html += '<td>N</td>';
+            }
+            if (data[i].bankbook) {
+                html += '<td>Y</td>';
+            } else {
+                html += '<td>N</td>';
+            }
+            html += '<td><div class="btn-purple-square" style="padding: 2px 8px; font-size: 13px" data-toggle="modal" data-target="#hospitalEquipmentModal">장비현황</div></td>';
             html += '</tr>';
 
-            $("#compamynInfos").append(html);
+            $("#hospitalInfo").append(html);
         }
     }
 
-    //고객정보상세
-    var rsvId = Object();
+    //병원 정보 상세
+    var hosId = Object();
 
     function clickDetail(data) {
-        rsvId.reservationId = data;
-        instance.post('M003003_REQ_RES', rsvId).then(res => {
-            setDetailCostomerData(res.data);
+        hosId.hospitalId = data;
+        instance.post('M005003_REQ_RES', hosId).then(res => {
+            setDetailHospitalData(res.data);
         });
     }
 
-    //클릭시 고객정보
-    function setDetailCostomerData(data) {
+    //클릭시 병원정보
+    function setDetailHospitalData(data) {
         console.log(data);
 
-        //info1
-        document.getElementById('cus-companyName').innerHTML = data.companyName;
-        document.getElementById('cus-companyBranch').innerHTML = data.companyBranch;
-        document.getElementById('cus-familyName').innerHTML = data.familyName;
-        document.getElementById('cus-familyBirthDate').innerHTML = data.familyBirthDate;
-        document.getElementById('cus-familyPhone').innerHTML = data.familyPhone;
-        document.getElementById('cus-familyAddress').innerHTML = data.familyAddress;
-        document.getElementById('cus-familyEmail').innerHTML = data.familyEmail;
-        document.getElementById('cus-familyPcDiscount').innerHTML = data.familyPcDiscount;
-        document.getElementById('cus-familyPsInfoDual').innerHTML = data.familyPsInfoDual;
-        document.getElementById('cus-familyPsInfoHos').innerHTML = data.familyPsInfoHos;
+        //info1 병원정보
+        document.getElementById('hos-name').innerHTML = data.name;
+        document.getElementById('hos-place').innerHTML = data.place;
+        document.getElementById('hos-address').innerHTML = data.address;
+        document.getElementById('hos-phone').innerHTML = data.phone;
+        document.getElementById('hos-licenseNum').innerHTML = data.licenseNum;
+        document.getElementById('hos-pcDiscount').innerHTML = data.pcDiscount;
+        document.getElementById('hos-pcPrice').innerHTML = data.pcPrice;
+        document.getElementById('hos-systemOpen').innerHTML = data.systemOpen;
+        document.getElementById('hos-services').innerHTML = data.services;
+        document.getElementById('hos-contract').innerHTML = data.contract;
 
-        //info2
-        document.getElementById('cus-packageReservation').innerHTML
-            = "예약기간 : " + data.packageReservationStartDate + " ~ " + data.packageReservationEndDate;
-        document.getElementById('cus-packageInspection').innerHTML
-            = "검진기간 : " + data.packageInspectionStartDate + " ~ " + data.packageInspectionEndDate;
-        document.getElementById('cus-reservationFirstWishDate').innerHTML = data.reservationFirstWishDate;
-        document.getElementById('cus-reservationSecondWishDate').innerHTML = data.reservationSecondWishDate;
-        document.getElementById('cus-ipDate').innerHTML = data.ipDate;
+        //info4 담당자정보
+        $("#info4 tbody").empty();
+        for (i = 0; i < data.hospitalManagerDTOList.length; i++) {
+            var html = '';
+            html += '<tr>';
+            html += '<td>' + data.hospitalManagerDTOList[i].department + '</td>';
+            html += '<td>' + data.hospitalManagerDTOList[i].name + '</td>';
+            html += '<td>' + data.hospitalManagerDTOList[i].position + '</td>';
+            html += '<td>' + data.hospitalManagerDTOList[i].directPhone + '</td>';
+            html += '<td>' + data.hospitalManagerDTOList[i].phone + '</td>';
+            html += '<td>' + data.hospitalManagerDTOList[i].email + '</td>';
+            html += '<td>' + data.hospitalManagerDTOList[i].receiveSMS + '</td>';
+            html += '</tr>';
+            $("#info4").append(html);
+        }
 
-        //info3
-        document.getElementById('cus-packageServiceName').innerHTML = data.packageServiceName;
-        document.getElementById('cus-packageHospitalName').innerHTML = data.packageHospitalName;
-        document.getElementById('cus-packageName').innerHTML = data.packageName;
-        document.getElementById('cus-piiClassList').innerHTML = data.piiClassList;
-        document.getElementById('cus-piiList').innerHTML = data.piiList;
-
-        //info4
-        document.getElementById('cus-packagePrice').innerHTML = data.packagePrice;
-        document.getElementById('cus-companySupportPrice').innerHTML = data.companySupportPrice;
-        document.getElementById('cus-customerPayedPrice').innerHTML = data.customerPayedPrice;
-
-        //info5
-        document.getElementById('cus-memo').innerHTML = data.memo;
     }
 
-    //예약확정일
-    function setIpDate(num) {
-        if (num == 1) {
-            document.getElementById('cus-ipDate').innerHTML = document.getElementById('cus-reservationFirstWishDate').innerHTML;
-        } else if (num == 2) {
-            document.getElementById('cus-ipDate').innerHTML = document.getElementById('cus-reservationSecondWishDate').innerHTML;
+    //담당자 추가
+    function setHospitalManagerData() {
+        var saveItems = new Object();
+
+        saveItems.hospitalId = hosId.hospitalId;
+        saveItems.department = document.getElementById('add-hos-res-department').innerText;
+        saveItems.email = document.getElementById('add-hos-res-email').innerText;
+        saveItems.password = document.getElementById('add-hos-res-password').innerText;
+        saveItems.name = document.getElementById('add-hos-res-name').innerText;
+        saveItems.phone = document.getElementById('add-hos-res-phone').innerText;
+        saveItems.directPhone = document.getElementById('add-hos-res-directPhone').innerText;
+        saveItems.position = document.getElementById('add-hos-res-position').innerText;
+        saveItems.receiveSMS = document.getElementById('add-hos-res-receiveSMS').innerText;
+
+        console.log(saveItems);
+
+        if (confirm("저장하시겠습니까?") == true) {
+            instance.post('M005004_REQ', saveItems).then(res => {
+                console.log(res.data.message);
+                if (res.data.message == "success") {
+                    alert("저장되었습니다.");
+                    clickDetail(saveItems.hospitalId);
+                    document.getElementById('add-hos-res-department').innerHTML = "";
+                    document.getElementById('add-hos-res-email').innerHTML = "";
+                    document.getElementById('add-hos-res-password').innerHTML = "";
+                    document.getElementById('add-hos-res-name').innerHTML = "";
+                    document.getElementById('add-hos-res-phone').innerHTML = "";
+                    document.getElementById('add-hos-res-directPhone').innerHTML = "";
+                    document.getElementById('add-hos-res-position').innerHTML = "";
+                    document.getElementById('add-hos-res-receiveSMS').innerHTML = "";
+                }
+            });
+        } else {
+            return false;
+        }
+    }
+
+    //장비 체크박스 전체선택 및 전체해제
+    $('#eqCheckAll').click(function () {
+        if ($("input:checkbox[id='eqCheckAll']").prop("checked")) {
+            $("input[type=checkbox]").prop("checked", true);
+        } else {
+            $("input[type=checkbox]").prop("checked", false);
+        }
+    });
+
+    //장비 추가
+    function addHospitalEquipment() {
+        $("#hospitalEquipmentInfo").append(
+            "<tr>" +
+            "<td><input type='checkbox' name='chkbox'></td>" +
+            "<td contentEditable=\"true\"></td>" +
+            "<td contentEditable=\"true\"></td>" +
+            "<td contentEditable=\"true\"></td>" +
+            "<td contentEditable=\"true\"></td>" +
+            "<td contentEditable=\"true\"></td>" +
+            "<td contentEditable=\"true\"></td>" +
+            "</tr>"
+        );
+    }
+
+    //장비 삭제
+    function delHospitalEquipment() {
+        var tableData = document.getElementById('hospitalEquipmentInfo');
+        for(var i = 1 ; i < tableData.rows.length; i ++ ){
+            var chkbox = tableData.rows[i].cells[0].childNodes[0].checked ;
+
+            if(chkbox){
+                tableData.deleteRow(i);
+                i--;
+            }
+        }
+    }
+
+    //장비 저장
+    function saveEquipmentInformation() {
+        var hosEQ = $('hospitalEquipmentInfo');
+        for(var i=0; i<2; i++) {
+            console.log(hosEQ.rows);
+        }
+
+        // instance.post('M005007_REQ', testList).then(res => {
+        //     console.log(res.data);
+        // });
+    }
+
+    //병원 신규 등록
+    function createHospitalData() {
+        var saveItems = new Object();
+
+        saveItems.name = document.getElementById('add-hos-name').innerText;
+        saveItems.branch = document.getElementById('add-hos-branch').innerText;
+        saveItems.systemOpen = document.getElementById('add-hos-systemOpen').innerText;
+        saveItems.contract = document.getElementById('add-hos-contract').innerText;
+        saveItems.address = document.getElementById('add-hos-address').innerText;
+        saveItems.email = document.getElementById('add-hos-email').innerText;
+        saveItems.rebatePrice = document.getElementById('add-hos-rebatePrice').innerText;
+        saveItems.pcDiscount = document.getElementById('add-hos-pcDiscount').innerText;
+        saveItems.paymentCode = document.getElementById('add-hos-paymentCode').innerText;
+        saveItems.supportFundCode = document.getElementById('add-hos-supportFundCode').innerText;
+        saveItems.balanceCode = document.getElementById('add-hos-balanceCode').innerText;
+        saveItems.familySupport = document.getElementById('add-hos-familySupport').innerText;
+        saveItems.license = document.getElementById('add-hos-license').innerText;
+        saveItems.memo = document.getElementById('add-hos-memo').innerText;
+        saveItems.reservationStartDate = document.getElementById('add-hos-reservationStartDate').innerText;
+        saveItems.reservationEndDate = document.getElementById('add-hos-reservationEndDate').innerText;
+        saveItems.inspectionStartDate = document.getElementById('add-hos-inspectionStartDate').innerText;
+        saveItems.inspectionEndDate = document.getElementById('add-hos-inspectionEndDate').innerText;
+
+
+        console.log(saveItems);
+
+        if (confirm("저장하시겠습니까?") == true) {
+            instance.post('M004006_REQ', saveItems).then(res => {
+                console.log(res.data.message);
+                alert("저장되었습니다.");
+            });
+        } else {
+            return false;
         }
     }
 
@@ -491,29 +591,26 @@
     function saveInformation() {
         var saveItems = new Object();
 
-        saveItems.reservationId = rsvId.reservationId;
-        saveItems.familyName = document.getElementById('cus-familyName').innerText;
-        saveItems.familyBirthDate = document.getElementById('cus-familyBirthDate').innerText;
-        saveItems.familyPhone = document.getElementById('cus-familyPhone').innerText;
-        saveItems.familyAddress = document.getElementById('cus-familyAddress').innerText;
-        saveItems.familyEmail = document.getElementById('cus-familyEmail').innerText;
-        saveItems.familyPcDiscount = document.getElementById('cus-familyPcDiscount').innerText;
-        saveItems.familyPsInfoDual = document.getElementById('cus-familyPsInfoDual').innerText;
-        saveItems.familyPsInfoHos = document.getElementById('cus-familyPsInfoHos').innerText;
-        saveItems.reservationFirstWishDate = document.getElementById('cus-reservationFirstWishDate').innerText;
-        saveItems.reservationSecondWishDate = document.getElementById('cus-reservationSecondWishDate').innerText;
-        saveItems.ipDate = document.getElementById('cus-ipDate').innerText;
-        saveItems.companySupportPrice = document.getElementById('cus-companySupportPrice').innerText;
-        saveItems.memo = document.getElementById('cus-memo').innerText;
+        saveItems.hospitalId = hosId.hospitalId;
+        saveItems.name = document.getElementById('hos-name').innerText;
+        saveItems.address = document.getElementById('hos-address').innerText;
+        saveItems.phone = document.getElementById('hos-phone').innerText;
+        saveItems.license_num = document.getElementById('hos-licenseNum').innerText;
+        saveItems.pcDiscount = document.getElementById('hos-pcDiscount').innerText;
+        saveItems.pcPrice = document.getElementById('hos-pcPrice').innerText;
+        saveItems.systemOpen = document.getElementById('hos-systemOpen').innerText;
+        saveItems.contract = document.getElementById('hos-contract').innerText;
+        saveItems.license = "사업자등록증";
+        saveItems.bankbook = "통장사본";
 
         console.log(saveItems);
 
-        if (confirm("저장하시겠습니까?") == true){
-            instance.post('M003004_REQ_RES', saveItems).then(res => {
+        if (confirm("저장하시겠습니까?") == true) {
+            instance.post('M005005_REQ', saveItems).then(res => {
                 console.log(res.data.message);
                 alert("저장되었습니다.");
             });
-        }else{
+        } else {
             return false;
         }
     }
