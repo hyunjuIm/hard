@@ -110,24 +110,24 @@
             <table id="reservationInfos" class="table table-hover" style="margin-top: 45px">
                 <thead>
                 <tr>
-                    <th>NO</th>
+                    <th style="width: 3%">NO</th>
                     <th>서비스</th>
                     <th>고객사</th>
                     <th>사업장</th>
                     <th>아이디<br>(사번)</th>
                     <th>성명</th>
                     <th>등급</th>
-                    <th>생년월일</th>
-                    <th>검진병원</th>
-                    <th>연락처</th>
-                    <th>예약일</th>
+                    <th style="width: 7%">생년월일</th>
+                    <th style="width: 7%">검진병원</th>
+                    <th style="width: 7%">연락처</th>
+                    <th style="width: 7%">예약일</th>
                     <th>수검<br>상태</th>
                     <th>패키지</th>
                     <th>패키지<br>금액</th>
                     <th>지원금</th>
-                    <th>개인정보<br>동의<br>(듀얼)</th>
-                    <th>개인정보<br>동의<br>(병원)</th>
-                    <th>공단<br>차감</th>
+                    <th style="width: 5%">개인정보<br>동의<br>(듀얼)</th>
+                    <th style="width: 5%">개인정보<br>동의<br>(병원)</th>
+                    <th style="width: 5%">공단<br>차감</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -450,8 +450,8 @@
             html += '<td>' + data[i].familyBirthDate + '</td>';
             html += '<td>' + data[i].hospitalName + '</td>';
             html += '<td>' + data[i].familyPhone;
-            html += '<td> 1차 : ' + data[i].firstWishDate;
-            html += '<p> 2차 : ' + data[i].secondWishDate + '</td>';
+            html += '<td> 1차 ' + data[i].firstWishDate;
+            html += '<p> 2차 ' + data[i].secondWishDate + '</td>';
 
             if (data[i].ipCheck) {
                 html += '<td>Y</td>';
@@ -591,6 +591,7 @@
             instance.post('M003004_REQ_RES', saveItems).then(res => {
                 console.log(res.data.message);
                 alert("저장되었습니다.");
+                clickDetail(saveItems.reservationId);
             });
         }else{
             return false;
