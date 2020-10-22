@@ -194,12 +194,12 @@
                                         <div class="form-check form-check-inline">
                                             <label class="form-check-label" for="familyPcDiscountYes">YES&nbsp</label>
                                             <input class="form-check-input" type="checkbox" id="familyPcDiscountYes"
-                                                   value="">
+                                                   name="cus-familyPcDiscount" value="1" onclick="onlyCheck(this, name)">
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <label class="form-check-label" for="familyPcDiscountNo">NO&nbsp</label>
                                             <input class="form-check-input" type="checkbox" id="familyPcDiscountNo"
-                                                   value="">
+                                                   name="cus-familyPcDiscount" value="2" onclick="onlyCheck(this, name)">
                                         </div>
                                     </td>
                                 </tr>
@@ -209,12 +209,12 @@
                                         <div class="form-check form-check-inline">
                                             <label class="form-check-label" for="familyPsInfoDualYes">YES&nbsp</label>
                                             <input class="form-check-input" type="checkbox" id="familyPsInfoDualYes"
-                                                   value="">
+                                                   name="cus-familyPsInfoDual" value="1" onclick="onlyCheck(this, name)">
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <label class="form-check-label" for="familyPsInfoDualNo">NO&nbsp</label>
                                             <input class="form-check-input" type="checkbox" id="familyPsInfoDualNo"
-                                                   value="">
+                                                   name="cus-familyPsInfoDual" value="2" onclick="onlyCheck(this, name)">
                                         </div>
                                     </td>
                                 </tr>
@@ -224,12 +224,12 @@
                                         <div class="form-check form-check-inline">
                                             <label class="form-check-label" for="familyPsInfoHosYes">YES&nbsp</label>
                                             <input class="form-check-input" type="checkbox" id="familyPsInfoHosYes"
-                                                   value="">
+                                                   name="cus-familyPsInfoHos" value="1" onclick="onlyCheck(this, name)">
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <label class="form-check-label" for="familyPsInfoHosNo">NO&nbsp</label>
                                             <input class="form-check-input" type="checkbox" id="familyPsInfoHosNo"
-                                                   value="">
+                                                   name="cus-familyPsInfoHos" value="2" onclick="onlyCheck(this, name)">
                                         </div>
                                     </td>
                                 </tr>
@@ -432,6 +432,16 @@
             var html = '';
             html += '<option>' + data.hospitalName[i] + '</option>'
             $("#hospitalName").append(html);
+        }
+    }
+
+    //체크박스 하나만 체크 되게
+    function onlyCheck(chk, name) {
+        var obj = document.getElementsByName(name);
+        for(var i=0; i<obj.length; i++){
+            if(obj[i] != chk){
+                obj[i].checked = false;
+            }
         }
     }
 
