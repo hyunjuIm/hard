@@ -194,12 +194,12 @@
                                         <div class="form-check form-check-inline">
                                             <label class="form-check-label" for="familyPcDiscountYes">YES&nbsp</label>
                                             <input class="form-check-input" type="checkbox" id="familyPcDiscountYes"
-                                                   name="cus-familyPcDiscount" value="1" onclick="onlyCheck(this, name)">
+                                                   name="cus-familyPcDiscount" value="true" onclick="onlyCheck(this, name)">
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <label class="form-check-label" for="familyPcDiscountNo">NO&nbsp</label>
                                             <input class="form-check-input" type="checkbox" id="familyPcDiscountNo"
-                                                   name="cus-familyPcDiscount" value="2" onclick="onlyCheck(this, name)">
+                                                   name="cus-familyPcDiscount" value="false" onclick="onlyCheck(this, name)">
                                         </div>
                                     </td>
                                 </tr>
@@ -209,12 +209,12 @@
                                         <div class="form-check form-check-inline">
                                             <label class="form-check-label" for="familyPsInfoDualYes">YES&nbsp</label>
                                             <input class="form-check-input" type="checkbox" id="familyPsInfoDualYes"
-                                                   name="cus-familyPsInfoDual" value="1" onclick="onlyCheck(this, name)">
+                                                   name="cus-familyPsInfoDual" value="true" onclick="onlyCheck(this, name)">
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <label class="form-check-label" for="familyPsInfoDualNo">NO&nbsp</label>
                                             <input class="form-check-input" type="checkbox" id="familyPsInfoDualNo"
-                                                   name="cus-familyPsInfoDual" value="2" onclick="onlyCheck(this, name)">
+                                                   name="cus-familyPsInfoDual" value="false" onclick="onlyCheck(this, name)">
                                         </div>
                                     </td>
                                 </tr>
@@ -224,12 +224,12 @@
                                         <div class="form-check form-check-inline">
                                             <label class="form-check-label" for="familyPsInfoHosYes">YES&nbsp</label>
                                             <input class="form-check-input" type="checkbox" id="familyPsInfoHosYes"
-                                                   name="cus-familyPsInfoHos" value="1" onclick="onlyCheck(this, name)">
+                                                   name="cus-familyPsInfoHos" value="true" onclick="onlyCheck(this, name)">
                                         </div>
                                         <div class="form-check form-check-inline">
                                             <label class="form-check-label" for="familyPsInfoHosNo">NO&nbsp</label>
                                             <input class="form-check-input" type="checkbox" id="familyPsInfoHosNo"
-                                                   name="cus-familyPsInfoHos" value="2" onclick="onlyCheck(this, name)">
+                                                   name="cus-familyPsInfoHos" value="false" onclick="onlyCheck(this, name)">
                                         </div>
                                     </td>
                                 </tr>
@@ -576,6 +576,19 @@
         }
     }
 
+    //체크값 result
+    function booleanData(name) {
+        var size = document.getElementsByName(name).length;
+        var result;
+        for(var i = 0; i < size; i++){
+            if(document.getElementsByName(name)[i].checked == true){
+                result = document.getElementsByName(name)[i].value
+            }
+        }
+
+        return result;
+    }
+
     //수정된 정보로 저장
     function saveInformation() {
         var saveItems = new Object();
@@ -586,9 +599,11 @@
         saveItems.familyPhone = document.getElementById('cus-familyPhone').innerText;
         saveItems.familyAddress = document.getElementById('cus-familyAddress').innerText;
         saveItems.familyEmail = document.getElementById('cus-familyEmail').innerText;
-        saveItems.familyPcDiscount = document.getElementById('cus-familyPcDiscount').innerText;
-        saveItems.familyPsInfoDual = document.getElementById('cus-familyPsInfoDual').innerText;
-        saveItems.familyPsInfoHos = document.getElementById('cus-familyPsInfoHos').innerText;
+
+        saveItems.familyPcDiscount = booleanData("cus-familyPcDiscount");
+        saveItems.familyPsInfoDual = booleanData("cus-familyPsInfoDual");
+        saveItems.familyPsInfoHos = booleanData("cus-familyPsInfoHos");
+
         saveItems.reservationFirstWishDate = document.getElementById('cus-reservationFirstWishDate').innerText;
         saveItems.reservationSecondWishDate = document.getElementById('cus-reservationSecondWishDate').innerText;
         saveItems.ipDate = document.getElementById('cus-ipDate').innerText;

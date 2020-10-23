@@ -21,5 +21,16 @@ router.get('/hospital-list', function(req, res, next) {
   res.render('hospital-list');
 });
 
+//패키지관리
+router.get('/package-list', function(req, res, next) {
+  res.render('package-list');
+});
+
+//패키지생성
+router.get('/package-create', function(req, res, next) {
+  res.render('package-create');
+});
+
 
 module.exports = router;
+

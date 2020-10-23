@@ -167,24 +167,4 @@
         setManageScheduleData(res.data);
     });
 
-
-    var testList = Array();
-    for(var i=0; i<5; i++){
-        var testEQ = Object();
-        testEQ.hospitalId = "HO#1";
-        testEQ.name = i;
-        testEQ.modelCode = i;
-        testEQ.uses = i;
-        testEQ.count = i;
-        testEQ.introductionYear = i;
-        testEQ.memo = i;
-        testList[i] = testEQ;
-    }
-    console.log(testList);
-
-    instance.post('M005007_REQ', testList).then(res => {
-        console.log(res.data);
-    });
-
-
 </script>
