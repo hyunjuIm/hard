@@ -19,7 +19,7 @@
                             </label>
                             <div class="form-group" style="width: 300px; margin-left: 10px">
                                 <select id="place" class="form-control">
-                                    <option selected>-선택-</option>
+                                    <option>-선택-</option>
                                 </select>
                             </div>
                         </ul>
@@ -36,7 +36,7 @@
                             <table class="table" id="pacInfoTable1">
                                 <thead>
                                 <tr>
-                                    <th style="width: 7%"><input type="checkbox" name="hospitalNo"></th>
+                                    <th style="width: 7%"><input type="checkbox" id="hosCheckAll" name="hospitalNo" onclick="clickHospitalAll()"></th>
                                     <th style="width: 10%">NO</th>
                                     <th style="width: 40%">병원명</th>
                                     <th style="width: 20%">등급</th>
@@ -51,7 +51,7 @@
                             <table class="table" id="pacInfoTable2">
                                 <thead>
                                 <tr>
-                                    <th style="width: 7%"><input type="checkbox" name="packageNo"></th>
+                                    <th style="width: 7%"><input type="checkbox" id="pacCheckAll" name="packageNo" onclick="clickPackageAll()"></th>
                                     <th style="width: 5%">NO</th>
                                     <th>패키지명</th>
                                     <th>고객사명</th>
@@ -97,7 +97,7 @@
                                 <tr>
                                     <th>고객사명</th>
                                     <td>
-                                        <select id="companyName" class="form-control" onchange="setPackageCompanySelectOption(this, 'companyBranch')">
+                                        <select id="companyName" class="form-control" onchange="setPackageModalCompanySelectOption(this, 'companyBranch')">
                                             <option>-선택-</option>
                                         </select>
                                     </td>
@@ -140,6 +140,7 @@
         setPackageModalSelectData(res.data);
     });
 
+    var packageCompanySelect;
     //검색 selector
     function setPackageModalSelectData(data) {
         console.log(data);
@@ -153,20 +154,16 @@
             //회사명 - 지점있을때
             var jbSplit = data[i].coNameBranch.split('-');
             var companyName = jbSplit[0];
-            console.log(companyName);
 
             for(var j=0; j<nameSize; j++) {
                 if(name[j] == companyName) {
                     check += 1;
-                    console.log(check);
                 }
             }
             if(check < 1) {
                 name[nameSize] = companyName;
                 nameSize += 1;
             }
-
-            console.log(check);
         }
 
         for(i=0; i<nameSize; i++) {
@@ -175,12 +172,12 @@
             $("#companyName").append(html);
         }
 
-        companySelect = data;
+        packageCompanySelect = data;
     }
 
     //사업장 리스트 셋팅
-    function setPackageCompanySelectOption(selectCompany, targetBranch) {
-        console.log(companySelect);
+    function setPackageModalCompanySelectOption(selectCompany, targetBranch) {
+        console.log(packageCompanySelect);
         var branch = document.getElementById(targetBranch);
 
         var opt = document.createElement("option");
@@ -188,14 +185,13 @@
 
         removeAll(branch);
 
-        for (i = 0; i < companySelect.length; i++) {
-            var jbSplit = companySelect[i].coNameBranch.split('-');
-            console.log(jbSplit);
+        for (i = 0; i < packageCompanySelect.length; i++) {
+            var jbSplit = packageCompanySelect[i].coNameBranch.split('-');
             var arr = jbSplit[jbSplit.length - 1];
 
             if(selectCompany.value == jbSplit[0]) {
                 var opt = document.createElement("option");
-                opt.value = companySelect[i].coId;
+                opt.value = packageCompanySelect[i].coNameBranch.coId;
                 opt.innerHTML = arr;
                 branch.appendChild(opt);
             }
@@ -275,10 +271,12 @@
     //패키지 병원 할당 테이블
     function setHospitalPackageData(data) {
         console.log(data);
+        $("input[name=hospitalNo]").prop("checked", false);
+
         for (i = 0; i < data.length; i++) {
             var html = '';
             html += '<tr>"';
-            html += '<td><input type="checkbox" name="hospitalNo" id=></td>';
+            html += '<td><input type="checkbox" name="hospitalNo" onclick="clickHospitalOne()" value= \'' + data[i].hosId + '\'></td>';
             html += '<td>' + data[i].hosId + '</td>';
             html += '<td>' + data[i].hosName + '</td>';
             html += '<td>' + data[i].hosGrade + '</td>';
@@ -304,7 +302,7 @@
         for (i = 0; i < data.length; i++) {
             var html = '';
             html += '<tr>';
-            html += '<td><input type="checkbox" name="packageNo"></td>';
+            html += '<td><input type="checkbox" name="packageNo" onclick="clickPackageOne()" value = \'' + data[i].pid + '\'></td>';
             html += '<td>' + data[i].pid + '</td>';
             html += '<td>' + data[i].pname + '</td>';
             html += '<td>' + data[i].coName + '</td>';
@@ -321,10 +319,87 @@
         }
     }
 
+    //체크박스 전체 선택 - 병원
+    function clickHospitalAll() {
+        if ($("#hosCheckAll").is(':checked')) {
+            $("input[name=hospitalNo]").prop("checked", true);
+        }
+        else {
+            $("input[name=hospitalNo]").prop("checked", false);
+        }
+    }
+
+    //체크박스 하나라도 취소되면 전체 선택 해지 - 병원
+    function clickHospitalOne() {
+        if($("#hosCheckAll").is(':checked').length == $("[name=hospitalNo]:checked").length) {
+            $("input[id=hosCheckAll]").prop("checked", true);
+        }
+        else {
+            $("input[id=hosCheckAll]").prop("checked", false);
+        }
+    }
+
+    //체크박스 전체 선택 - 패키지
+    function clickPackageAll() {
+        if ($("#pacCheckAll").is(':checked')) {
+            $("input[name=packageNo]").prop("checked", true);
+        }
+        else {
+            $("input[name=packageNo]").prop("checked", false);
+        }
+    }
+
+    //체크박스 하나라도 취소되면 전체 선택 해지 - 패키지
+    function clickPackageOne() {
+        if($("#pacCheckAll").is(':checked').length == $("[name=packageNo]:checked").length) {
+            $("input[id=pacCheckAll]").prop("checked", true);
+        }
+        else {
+            $("input[id=pacCheckAll]").prop("checked", false);
+        }
+    }
+
     //병원 전송
     function sendPackageHospital() {
-        if($("input:checkbox[name=hospitalNo]").is(":checked") == true) {
+        var hos=[];
+        var hosSize =0;
+        $("input:checkbox[name=hospitalNo]:checked").each(function (index) {
+            if($(this).val() != "on") {
+                hos[hosSize] = $(this).val();
+                hosSize++;
+            }
+        });
 
+        var pac=[];
+        var pacSize =0;
+        $("input:checkbox[name=packageNo]:checked").each(function (index) {
+            if($(this).val() != "on") {
+                pac[pacSize] = $(this).val();
+                pacSize++;
+            }
+        });
+
+
+        var sendItems = new Object();
+
+        sendItems.hId = hos;
+        sendItems.pId = pac;
+
+        if (sendItems.hId.length < 1) {
+            alert("할당할 병원을 선택해주세요.")
+        }
+        if (sendItems.pId.length < 1) {
+            alert("패키지를 선택해주세요.")
+        }
+        else if (sendItems.hId.length > 0 && sendItems.pId.length > 0){
+            if (confirm("전송하시겠습니까?") == true){
+                instance.post('M007006_REQ', sendItems).then(res => {
+                    console.log(res.data.message);
+                    alert("전송되었습니다.");
+                });
+            }else{
+                return false;
+            }
         }
     }
 
