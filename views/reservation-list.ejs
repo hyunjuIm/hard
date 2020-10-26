@@ -49,7 +49,7 @@
                             <li>고객사</li>
                         </label>
                         <div class="form-group col">
-                            <select id="companyName" class="form-control">
+                            <select id="companyName" class="form-control" onchange="setCompanySelectOption(this, 'companyBranch')">
                                 <option selected>-전체-</option>
                             </select>
                         </div>
@@ -382,6 +382,8 @@
         });
     }
 
+
+    var companySelect;
     //검색 selector
     function setReservationSelectData(data) {
         //수검연도
@@ -405,14 +407,7 @@
             html += '<option>' + companyName + '</option>'
             $("#companyName").append(html);
 
-            //지점
-            for (i = 0; i < data.companyName.length; i++) {
-                var jbSplit = data.companyName[i].split('-');
-                var companyBranch = jbSplit[jbSplit.length - 1];
-                var html = '';
-                html += '<option>' + companyBranch + '</option>'
-                $("#companyBranch").append(html);
-            }
+            companySelect = data.companyName;
         } else {
             //회사명 - 지점없을때
             for (i = 0; i < data.companyName.length; i++) {
@@ -432,6 +427,43 @@
             var html = '';
             html += '<option>' + data.hospitalName[i] + '</option>'
             $("#hospitalName").append(html);
+        }
+    }
+
+    //사업장 리스트 셋팅
+    function setCompanySelectOption(selectCompany, targetBranch) {
+        var branch = document.getElementById(targetBranch);
+        removeAll(branch);
+
+        var opt = document.createElement("option");
+        opt.value = "all";
+        opt.innerHTML = "-전체-";
+        branch.appendChild(opt);
+
+        if(selectCompany.value == "all") {
+            removeAll(branch);
+        }
+        else {
+            removeAll(branch);
+            var arr;
+            for (i = 0; i < companySelect.length; i++) {
+                var jbSplit = companySelect[i].split('-');
+                console.log(jbSplit);
+                arr = jbSplit[jbSplit.length - 1];
+
+                var opt = document.createElement("option");
+                opt.value = arr;
+                opt.innerHTML = arr;
+                branch.appendChild(opt);
+            }
+        }
+
+    }
+
+    //옵션 삭제
+    function removeAll(e){
+        for(var i = 0, limit = e.options.length; i < limit - 1; ++i){
+            e.remove(1);
         }
     }
 
