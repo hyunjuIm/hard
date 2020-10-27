@@ -27,25 +27,25 @@
 
                 <ul class="nav nav-tabs package-tabs">
                     <li class="nav-item" id="allPackageTab" onclick="clickTab(id)">
-                        <a class="nav-link active" data-toggle="tab" href="#allPackageTab">전체</a>
+                        <a class="nav-link active" data-toggle="tab" href="#" onclick="clickPackageTab(0)">전체</a>
                     </li>
                     <li class="nav-item" id="basePackageTab" onclick="clickTab(id)">
-                        <a class="nav-link" data-toggle="tab" href="#basePackageTab">기본</a>
+                        <a class="nav-link" data-toggle="tab" href="#" onclick="clickPackageTab(1)">기본</a>
                     </li>
                     <li class="nav-item" id="addPackageTab" onclick="clickTab(id)">
-                        <a class="nav-link" data-toggle="tab" href="#addPackageTab">추가</a>
+                        <a class="nav-link" data-toggle="tab" href="#" onclick="clickPackageTab(2)">추가</a>
                     </li>
                     <li class="nav-item menu-title" id="selectPackageA" style="display: none" onclick="clickTab(id)">
-                        <a class="nav-link" data-toggle="tab" href="#tapSelectPackageA">선택A</a>
+                        <a class="nav-link" data-toggle="tab" href="#" onclick="clickPackageTab(3)">선택A</a>
                     </li>
                     <li class="nav-item" id="selectPackageB" style="display: none" onclick="clickTab(id)">
-                        <a class="nav-link" data-toggle="tab" href="#tapSelectPackageB">선택B</a>
+                        <a class="nav-link" data-toggle="tab" href="#" onclick="clickPackageTab(4)">선택B</a>
                     </li>
                     <li class="nav-item" id="selectPackageC" style="display: none" onclick="clickTab(id)">
-                        <a class="nav-link" data-toggle="tab" href="#tapSelectPackageC">선택C</a>
+                        <a class="nav-link" data-toggle="tab" href="#" onclick="clickPackageTab(5)">선택C</a>
                     </li>
                     <li class="nav-item" id="selectPackageD" style="display: none" onclick="clickTab(id)">
-                        <a class="nav-link" data-toggle="tab" href="#tapSelectPackageD">선택D</a>
+                        <a class="nav-link" data-toggle="tab" href="#" onclick="clickPackageTab(6)">선택D</a>
                     </li>
                     <li class="nav-item" id="addTab">
                         <a class="nav-link" data-toggle="tab" href="#addTab" style="font-weight: bold; background: #E6E6E6"
@@ -53,113 +53,11 @@
                     </li>
                 </ul>
                 <div class="tab-content" style="height: 400px; overflow-y: scroll">
-                    <div class="tab-pane fade show active" id="allPackageTab" onclick="clickTab(id)">
-                        <table id="allPackageTabTable">
+                    <div class="tab-pane fade show active" id="packageTab">
+                        <table id="packageTable">
                             <thead>
                             <tr>
-                                <th style="width: 7%"><input type="checkbox" id="" name="" onclick="clickTab()"></th>
-                                <th>세부항목</th>
-                                <th>검사명</th>
-                                <th>구분</th>
-                                <th>성별</th>
-                                <th>추가금</th>
-                                <th>비고</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="tab-pane fade" id="basePackageTab" onclick="clickTab(id)">
-                        <table id="basePackageTabTable">
-                            <thead>
-                            <tr>
-                                <th style="width: 7%"><input type="checkbox" id="" name="" onclick="clickTab()"></th>
-                                <th>세부항목</th>
-                                <th>검사명</th>
-                                <th>구분</th>
-                                <th>성별</th>
-                                <th>추가금</th>
-                                <th>비고</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="tab-pane fade" id="addPackageTab" onclick="clickTab(id)">
-                        <table id="addPackageTabTable">
-                            <thead>
-                            <tr>
-                                <th style="width: 7%"><input type="checkbox" id="" name="" onclick="clickTab()"></th>
-                                <th>세부항목</th>
-                                <th>검사명</th>
-                                <th>구분</th>
-                                <th>성별</th>
-                                <th>추가금</th>
-                                <th>비고</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="tab-pane fade" id="tapSelectPackageA" onclick="clickTab(id)">
-                        <table id="tapSelectPackageATable">
-                            <thead>
-                            <tr>
-                                <th style="width: 7%"><input type="checkbox" id="" name="" onclick="clickTab()"></th>
-                                <th>세부항목</th>
-                                <th>검사명</th>
-                                <th>구분</th>
-                                <th>성별</th>
-                                <th>추가금</th>
-                                <th>비고</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="tab-pane fade" id="tapSelectPackageB" onclick="clickTab(id)">
-                        <table id="tapSelectPackageBTable">
-                            <thead>
-                            <tr>
-                                <th style="width: 7%"><input type="checkbox" id="" name="" onclick="clickTab()"></th>
-                                <th>세부항목</th>
-                                <th>검사명</th>
-                                <th>구분</th>
-                                <th>성별</th>
-                                <th>추가금</th>
-                                <th>비고</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="tab-pane fade" id="tapSelectPackageC" onclick="clickTab(id)">
-                        <table id="tapSelectPackageCTable">
-                            <thead>
-                            <tr>
-                                <th style="width: 7%"><input type="checkbox" id="" name="" onclick="clickTab()"></th>
-                                <th>세부항목</th>
-                                <th>검사명</th>
-                                <th>구분</th>
-                                <th>성별</th>
-                                <th>추가금</th>
-                                <th>비고</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="tab-pane fade" id="tapSelectPackageD" onclick="clickTab(id)">
-                        <table id="tapSelectPackageDTable">
-                            <thead>
-                            <tr>
-                                <th style="width: 7%"><input type="checkbox" id="" name="" onclick="clickTab()"></th>
+                                <th style="width: 5%"><input type="checkbox" id="packageCheck" name="packageCheck" onclick="clickAll(id, name)"></th>
                                 <th>세부항목</th>
                                 <th>검사명</th>
                                 <th>구분</th>
@@ -196,83 +94,27 @@
 
                 <ul class="nav nav-tabs">
                     <li class="nav-item">
-                        <a class="nav-link active" data-toggle="tab" href="#allInjectionTab">전체</a>
+                        <a class="nav-link active" data-toggle="tab" href="#" onclick="clickInjectionTab(0)" >전체</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#baseInjectionTab">기본</a>
+                        <a class="nav-link" data-toggle="tab" href="#" onclick="clickInjectionTab(1)">기본</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#bloodInjectionTab">혈액</a>
+                        <a class="nav-link" data-toggle="tab" href="#" onclick="clickInjectionTab(2)">혈액</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#toolInjectionTab">장비</a>
+                        <a class="nav-link" data-toggle="tab" href="#" onclick="clickInjectionTab(3)">장비</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" data-toggle="tab" href="#etcInjectionTab">기타</a>
+                        <a class="nav-link" data-toggle="tab" href="#" onclick="clickInjectionTab(4)">기타</a>
                     </li>
                 </ul>
                 <div class="tab-content" style="height: 400px; overflow-y: scroll">
-                    <div class="tab-pane fade show active" id="allInjectionTab">
-                        <table id="injectionAllTable">
+                    <div class="tab-pane fade show active" id="injectionTab">
+                        <table id="injectionTable">
                             <thead>
                             <tr>
-                                <th style="width: 7%"><input type="checkbox" id="injectionAllNo" name="injectionAllNo" onclick="clickAll(id, name)"></th>
-                                <th>세부항목</th>
-                                <th>검사명</th>
-                                <th>관리코드</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="tab-pane fade" id="baseInjectionTab">
-                        <table id="injectionBaseTable">
-                            <thead>
-                            <tr>
-                                <th style="width: 7%"><input type="checkbox" id="injectionBaseNo" name="injectionBaseNo" onclick="clickAll(id, name)"></th>
-                                <th>세부항목</th>
-                                <th>검사명</th>
-                                <th>관리코드</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="tab-pane fade" id="bloodInjectionTab">
-                        <table id="injectionBloodTable">
-                            <thead>
-                            <tr>
-                                <th style="width: 7%"><input type="checkbox" id="injectionBloodNo" name="injectionBloodNo" onclick="clickAll(id, name)"></th>
-                                <th>세부항목</th>
-                                <th>검사명</th>
-                                <th>관리코드</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="tab-pane fade" id="toolInjectionTab">
-                        <table id="injectionToolTable">
-                            <thead>
-                            <tr>
-                                <th style="width: 7%"><input type="checkbox" id="injectionToolNo" name="injectionToolNo" onclick="clickAll(id, name)"></th>
-                                <th>세부항목</th>
-                                <th>검사명</th>
-                                <th>관리코드</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="tab-pane fade" id="etcInjectionTab">
-                        <table id="injectionEtcTable">
-                            <thead>
-                            <tr>
-                                <th style="width: 7%"><input type="checkbox" id="injectionEtcNo" name="injectionEtcNo" onclick="clickAll(id, name)"></th>
+                                <th style="width: 7%"><input type="checkbox" id="injectionCheck" name="injectionCheck" onclick="clickAll(id, name)"></th>
                                 <th>세부항목</th>
                                 <th>검사명</th>
                                 <th>관리코드</th>
@@ -361,73 +203,72 @@
         }
     }
 
+    //검사항목 배열
+    var injectionItems = new Array();
+
+    //검사항목 탭 전환
+    function clickInjectionTab(id){
+        $("#injectionTable tbody").empty();
+
+        for (i = 0; i < injectionItems[id].length; i++) {
+            var value = injectionItems[id][i].details + "#" + injectionItems[id][i].inspection + "#" + injectionItems[id][i].code;
+            var html = '';
+            html += '<tr>"';
+            html += '<td><input type="checkbox" name="injectionCheck" onclick="clickOne(name)" value = \'' + value + '\'></td>';
+            html += '<td>' + injectionItems[id][i].details + '</td>';
+            html += '<td>' + injectionItems[id][i].inspection + '</td>';
+            html += '<td>' + injectionItems[id][i].code + '</td>';
+            html += '</tr>';
+
+            $("#injectionTable").append(html);
+        }
+    }
+
     //검사항목 초기 셋팅
     function setInjectionData(data) {
+        var injection0 = new Array();
+        var injection1 = new Array();
+        var injection2 = new Array();
+        var injection3 = new Array();
+        var injection4 = new Array();
+
         for (i = 0; i < data.length; i++) {
             var value = data[i].details + "#" + data[i].inspection + "#" + data[i].code;
             var html = '';
             html += '<tr>"';
-            html += '<td><input type="checkbox" name="injectionAllNo" onclick="clickOne(name)" value = \'' +value + '\'></td>';
+            html += '<td><input type="checkbox" name="injectionCheck" onclick="clickOne(name)" value = \'' +value + '\'></td>';
             html += '<td>' + data[i].details + '</td>';
             html += '<td>' + data[i].inspection + '</td>';
             html += '<td>' + data[i].code + '</td>';
             html += '</tr>';
 
-            $("#injectionAllTable").append(html);
+            $("#injectionTable").append(html);
 
+            injection0.push(data[i])
             if (data[i].division == "기본검사") {
-                var html = '';
-                html += '<tr>"';
-                html += '<td><input type="checkbox" name="injectionBaseNo" onclick="clickOne(name)" value = \'' + value + '\'></td>';
-                html += '<td>' + data[i].details + '</td>';
-                html += '<td>' + data[i].inspection + '</td>';
-                html += '<td>' + data[i].code + '</td>';
-                html += '</tr>';
-                $("#injectionBaseTable").append(html);
+                injection1.push(data[i]);
             } else if (data[i].division == "혈액검사") {
-                var html = '';
-                html += '<tr>"';
-                html += '<td><input type="checkbox" name="injectionBloodNo" onclick="clickOne(name)" value = \'' + value + '\'></td>';
-                html += '<td>' + data[i].details + '</td>';
-                html += '<td>' + data[i].inspection + '</td>';
-                html += '<td>' + data[i].code + '</td>';
-                html += '</tr>';
-                $("#injectionBloodTable").append(html);
+                injection2.push(data[i]);
             } else if (data[i].division == "장비검사") {
-                var html = '';
-                html += '<tr>"';
-                html += '<td><input type="checkbox" name="injectionToolNo" onclick="clickOne(name)" value = \'' + value + '\'></td>';
-                html += '<td>' + data[i].details + '</td>';
-                html += '<td>' + data[i].inspection + '</td>';
-                html += '<td>' + data[i].code + '</td>';
-                html += '</tr>';
-                $("#injectionToolTable").append(html);
+                injection3.push(data[i]);
             } else {
-                var html = '';
-                html += '<tr>"';
-                html += '<td><input type="checkbox" name="injectionEtcNo" onclick="clickOne(name)" value = \'' + value + '\'></td>';
-                html += '<td>' + data[i].details + '</td>';
-                html += '<td>' + data[i].inspection + '</td>';
-                html += '<td>' + data[i].code + '</td>';
-                html += '</tr>';
-                $("#injectionEtcTable").append(html);
+                injection4.push(data[i]);
             }
         }
+
+        injectionItems[0] = injection0;
+        injectionItems[1] = injection1;
+        injectionItems[2] = injection2;
+        injectionItems[3] = injection3;
+        injectionItems[4] = injection4;
     }
 
     //검사항목 검색
     function searchInjection() {
+        $('#injectionTable > tbody').empty();
+
         var search = new Object();
-
-        $('#injectionAllTable > tbody').empty();
-        $('#injectionBaseTable > tbody').empty();
-        $('#injectionBloodTable > tbody').empty();
-        $('#injectionToolTable > tbody').empty();
-        $('#injectionEtcTable > tbody').empty();
-
         search.searchWord =  $("#searchInjectionWord").val();
-
-        console.log(search.searchWord);
 
         //검사항목리스트
         instance.post('M008001_RES', search).then(res => {
@@ -440,72 +281,146 @@
         console.log(id);
     }
 
+    var pkgId = "PKG#52";
+    //패키지구성 리스트
+    instance.post('M008003_REQ_RES', pkgId).then(res => {
+        setPackageTabData(res.data);
+    });
+
+    //패키지구성 배열
+    var packageTabItems = new Array();
+
+    //패키지구성 초기 셋팅
+    function setPackageTabData(data) {
+        var package0 = new Array();
+        var package1 = new Array();
+        var package2 = new Array();
+        var package3 = new Array();
+        var package4 = new Array();
+        var package5 = new Array();
+        var package6 = new Array();
+
+        for (i = 0; i < data.length; i++) {
+            var html = '';
+            html += '<tr>"';
+            html += '<td><input type="checkbox" name="injectionCheck" onclick="clickOne(name)" value = \'' +0 + '\'></td>';
+            html += '<td>' + data[i].id + '</td>';
+            html += '<td>' + data[i].ipCode + '</td>';
+            html += '<td>' + data[i].sex + '</td>';
+            html += '<td>' + data[i].price + '</td>';
+            html += '<td>' + data[i].memo + '</td>';
+            html += '</tr>';
+
+            $("#packageTable").append(html);
+
+            package0.push(data[i])
+            if (data[i].ipClass == "기본검사") {
+                package1.push(data[i]);
+            } else if (data[i].ipClass == "추가검사") {
+                package2.push(data[i]);
+            } else if (data[i].ipClass == "선택A") {
+                package3.push(data[i]);
+            } else if (data[i].ipClass == "선택B") {
+                package4.push(data[i]);
+            } else if (data[i].ipClass == "선택C") {
+                package5.push(data[i]);
+            } else if (data[i].ipClass == "선택D") {
+                package6.push(data[i]);
+            }
+        }
+
+        packageTabItems[0] = package0;
+        packageTabItems[1] = package1;
+        packageTabItems[2] = package2;
+        packageTabItems[3] = package3;
+        packageTabItems[4] = package4;
+        packageTabItems[5] = package5;
+        packageTabItems[6] = package6;
+    }
+
+    //패키지구성 탭 전환
+    function clickPackageTab(id){
+        $("#packageTable tbody").empty();
+
+        for (i = 0; i < injectionItems[id].length; i++) {
+            var value = injectionItems[id][i].details + "#" + injectionItems[id][i].inspection + "#" + injectionItems[id][i].code;
+            var html = '';
+            html += '<tr>"';
+            html += '<td><input type="checkbox" name="injectionCheck" onclick="clickOne(name)" value = \'' + value + '\'></td>';
+            html += '<td>' + injectionItems[id][i].details + '</td>';
+            html += '<td>' + injectionItems[id][i].inspection + '</td>';
+            html += '<td>' + injectionItems[id][i].code + '</td>';
+            html += '</tr>';
+
+            $("#packageTable").append(html);
+        }
+    }
+
+    //패키지구성에서 검사항목 구분 셀럭터 선택
+    function changeIpClass(value) {
+        console.log(value);
+
+        if (value == "기본검사") {
+            clickPackageTab(0);
+        } else if (value == "추가검사") {
+            clickPackageTab(1);
+        } else if (value == "선택A") {
+            clickPackageTab(2);
+        } else if (value == "선택B") {
+            clickPackageTab(3);
+        } else if (value == "선택C") {
+            clickPackageTab(4);
+        } else if (value == "선택D") {
+            clickPackageTab(5);
+        }
+    }
+
+    var injectionCode = new Array();
     //검사항목 추가
     function addInjection() {
-        var injectionItems = new Object();
-
-        // injectionItems.coId = $("#companyBranch").val();
-        // injectionItems.pkgName = document.getElementById('add-pac-name').innerText;
-        // injectionItems.price = document.getElementById('add-pac-price').innerText;
-        //
-        // console.log(injectionItems);
-
-        var ipClass = '<td><select class="form-control">' +
+        var ipClass = '<td><select class="form-control" name="ipClass" onclick="changeIpClass(value)">' +
             '<option>선택</option>' +
             '<option>기본검사</option>' +
             '<option>추가검사</option>' +
             '</select></td>';
-        var sex = '<td><select class="form-control">' +
+        var sex = '<td><select class="form-control" name="sex">' +
             '<option>전체</option>' +
             '<option>남</option>' +
             '<option>여</option>' +
             '</select></td>';
 
-        $("input:checkbox[name=injectionAllNo]:checked").each(function (index) {
+        $("input:checkbox[name=injectionCheck]:checked").each(function (index) {
             if($(this).val() != "on") {
                 var value = $(this).val();
                 var values = value.split("#");
+                var check = 0;
 
-                console.log(values);
+                for(i=0; i<injectionCode.length; i++) {
+                    if(injectionCode[i] == values[2]) {
+                        alert("검사명 : " + values[1] + "\n중복입니다. 다시 확인해주세요.");
+                        check++;
+                    }
+                }
 
-                var html = ""
-                html += '<tr>"';
-                html += '<td><input type="checkbox" name="packageAllNo" onclick="clickOne(name)" value = \'' +value + '\'></td>';
-                html += '<td>' + values[0] + '</td>';
-                html += '<td>' + values[1] + '</td>';
-                html += ipClass;
-                html += sex;
-                html += '<td contentEditable="true"></td>';
-                html += '<td contentEditable="true"></td>';
-                html += '</tr>';
+                //중복 아닌 검사항목만 추가
+                if(check == 0) {
+                    injectionCode.push(values[2]);
 
-                $("#allPackageTabTable").append(html);
+                    var html = ""
+                    html += '<tr>"';
+                    html += '<td><input type="checkbox" name="packageCheck" onclick="clickOne(name)" value = \'' +values[2] + '\'></td>';
+                    html += '<td>' + values[0] + '</td>';
+                    html += '<td>' + values[1] + '</td>';
+                    html += ipClass;
+                    html += sex;
+                    html += '<td contentEditable="true"></td>';
+                    html += '<td contentEditable="true"></td>';
+                    html += '</tr>';
 
-                $("input:checkbox[name=injectionAllNo]:checked").prop("checked", false);
-            }
-        });
+                    $("#packageTable").append(html);
+                }
 
-        $("input:checkbox[name=injectionBaseNo]:checked").each(function (index) {
-            if($(this).val() != "on") {
-                var value = $(this).val();
-                var values = value.split("#");
-
-                console.log(values);
-
-                var html = ""
-                html += '<tr>"';
-                html += '<td><input type="checkbox" name="packageAllNo" onclick="clickOne(name)" value = \'' +value + '\'></td>';
-                html += '<td>' + values[0] + '</td>';
-                html += '<td>' + values[1] + '</td>';
-                html += ipClass;
-                html += sex;
-                html += '<td contentEditable="true"></td>';
-                html += '<td contentEditable="true"></td>';
-                html += '</tr>';
-
-                $("#allPackageTabTable").append(html);
-
-                $("input:checkbox[name=injectionAllNo]:checked").prop("checked", false);
+                $("input:checkbox[name=injectionCheck]:checked").prop("checked", false);
             }
         });
     }
