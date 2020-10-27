@@ -61,8 +61,21 @@ table {
   text-decoration: none;
 }
 
+.btn-cancel-square {
+  cursor: pointer;
+  display: inline-block;
+  padding: 8px 20px;
+  background: white;
+  border: solid 1px #424242;
+  text-align: center;
+  color: #424242;
+  font-size: 15px;
+  text-decoration: none;
+}
+
 .btn-save-square:hover,
-.btn-purple-square:hover {
+.btn-purple-square:hover,
+.btn-light-purple-square:hover{
   color: white
 }
 
@@ -150,6 +163,13 @@ ul.img-circle li {
   background : url('../images/btn_search.png') left center no-repeat;
   text-decoration: none;
   cursor: pointer;
+}
+
+.table-box {
+  padding: 30px;
+  margin: 15px;
+  background-color: white;
+  box-shadow: 0px 0px 20px #e6e6e6;
 }
 
 .search-icon:hover {

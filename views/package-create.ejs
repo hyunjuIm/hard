@@ -131,7 +131,7 @@
                     <th>사업장명</th>
                     <th>패키지</th>
                     <th>패키지단가</th>
-                    <th>상태</th>
+                    <th>기업승인여부</th>
                     <th>기간</th>
                     <th>세부항목 상태</th>
                     <th>세부항목 설정</th>
@@ -334,8 +334,8 @@
             } else {
                 html += '<td>N</td>';
             }
-            html += '<td><div class="btn-purple-square" style="padding: 2px 8px; font-size: 13px" ' +
-                'onClick="setEquipmentData(\'' + data[i].pkgId + '\')">설정</div></td>';
+            html += '<td><div class="btn-purple-square" style="padding: 2px 8px; font-size: 13px">' +
+                '<a style="color: white" href="/package-injection-item">설정</a></div></td>';
             html += '</tr>';
 
             $("#packageCreateInfos").append(html);

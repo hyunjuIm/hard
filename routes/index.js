@@ -31,6 +31,10 @@ router.get('/package-create', function(req, res, next) {
   res.render('package-create');
 });
 
+//패키지검사항목
+router.get('/package-injection-item', function(req, res, next) {
+  res.render('package-injection-item');
+});
 
 module.exports = router;
 
