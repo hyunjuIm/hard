@@ -310,6 +310,8 @@
     function setPackageCreateData(data) {
         console.log(data);
         for (i = 0; i < data.length; i++) {
+            M.v = data[i].pkgId;
+
             var html = '';
             html += '<tr>"';
             html += '<td>' + data[i].pkgId + '</td>';

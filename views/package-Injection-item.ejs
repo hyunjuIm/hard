@@ -342,14 +342,16 @@
     function clickPackageTab(id){
         $("#packageTable tbody").empty();
 
-        for (i = 0; i < injectionItems[id].length; i++) {
-            var value = injectionItems[id][i].details + "#" + injectionItems[id][i].inspection + "#" + injectionItems[id][i].code;
+        for (i = 0; i < packageTabItems[id].length; i++) {
             var html = '';
             html += '<tr>"';
             html += '<td><input type="checkbox" name="injectionCheck" onclick="clickOne(name)" value = \'' + value + '\'></td>';
-            html += '<td>' + injectionItems[id][i].details + '</td>';
-            html += '<td>' + injectionItems[id][i].inspection + '</td>';
-            html += '<td>' + injectionItems[id][i].code + '</td>';
+            html += '<td>' + packageTabItems[id][i].id + '</td>';
+            html += '<td>' + packageTabItems[id][i].ipCode + '</td>';
+            html += '<td>' + packageTabItems[id][i].ipClass + '</td>';
+            html += '<td>' + packageTabItems[id][i].sex + '</td>';
+            html += '<td>' + packageTabItems[id][i].price + '</td>';
+            html += '<td>' + packageTabItems[id][i].memo + '</td>';
             html += '</tr>';
 
             $("#packageTable").append(html);
