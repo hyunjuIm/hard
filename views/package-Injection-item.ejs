@@ -143,7 +143,7 @@
             <div class="btn-save-square" style="font-size: 18px; padding: 7px 40px; margin-right: 20px" onclick="savePackageItems()">
                 저장
             </div>
-            <div class="btn-cancel-square" style="font-size: 18px; padding: 7px 40px;" onclick="">
+            <div class="btn-cancel-square" style="font-size: 18px; padding: 7px 40px;" onclick="cancelPackageItems()">
                 취소
             </div>
         </div>
@@ -162,7 +162,6 @@
     var tabItems = ["전체", "기본", "추가", "선택A", "선택B", "선택C", "선택D"];
     var tabId = 0;
     var choiceLimitArr = [-1, -1, -1, -1, -1, -1, -1];
-
     var sexItems = ["전체", "남", "여"];
 
     //선택항목 탭
@@ -191,8 +190,6 @@
         }
         clickPackageTab(tabId);
     }
-
-    //검사항목 리스트
 
     //체크박스 전체 선택
     function clickAll(id, name) {
@@ -243,7 +240,7 @@
     }
 
     //검사항목 초기 셋팅
-    function setInjectionData(data) {
+    function setInjectionData(data, search) {
         var injection0 = new Array();
         var injection1 = new Array();
         var injection2 = new Array();
@@ -274,16 +271,18 @@
             }
         }
 
-        injectionItems[0] = injection0;
-        injectionItems[1] = injection1;
-        injectionItems[2] = injection2;
-        injectionItems[3] = injection3;
-        injectionItems[4] = injection4;
+        if(search == null) {
+            injectionItems[0] = injection0;
+            injectionItems[1] = injection1;
+            injectionItems[2] = injection2;
+            injectionItems[3] = injection3;
+            injectionItems[4] = injection4;
 
-        //패키지구성 리스트
-        instance.post('M008003_REQ_RES', pkgId).then(res => {
-            setPackageTabData(res.data);
-        });
+            //패키지구성 리스트
+            instance.post('M008003_REQ_RES', pkgId).then(res => {
+                setPackageTabData(res.data);
+            });
+        }
     }
 
     //검사항목 검색
@@ -295,7 +294,7 @@
 
         //검사항목리스트
         instance.post('M008001_RES', search).then(res => {
-            setInjectionData(res.data);
+            setInjectionData(res.data, search.searchWord);
         });
     }
 
@@ -325,9 +324,6 @@
     //패키지구성에 새로 추가된 검사항목
     var addPackage = new Array();
 
-    //패키지구성 검사항목 중복검사 배열
-    var injectionCode = new Array();
-
     //패키지구성 초기 셋팅
     function setPackageTabData(data) {
         console.log(data);
@@ -338,18 +334,6 @@
         var package4 = new Array();
         var package5 = new Array();
         var package6 = new Array();
-        /*
-
-        } else {
-            if ($("#selectPackageB").css("display") == "none") {
-
-            } else {
-                if ($("#selectPackageC").css("display") == "none") {
-
-                } else {
-                    if ($("#selectPackageD").css("display") == "none") {
-
-        * */
 
         for (i = 0; i < data.length; i++) {
 
@@ -447,13 +431,11 @@
             sex += '</select></td>';
             html += sex;
 
-            html += '<td>' + packageTabItems[id][i].price + '</td>';
-            html += '<td>' + packageTabItems[id][i].memo + '</td>';
+            html += '<td contentEditable="true" onkeyup="savePrice(\'' + packageTabItems[id][i].ipCode + '\', this)">' + packageTabItems[id][i].price + '</td>';
+            html += '<td contentEditable="true"onkeyup="saveMemo(\'' + packageTabItems[id][i].ipCode + '\', this)">' + packageTabItems[id][i].memo + '</td>';
             html += '</tr>';
 
             $("#packageTable").append(html);
-
-
         }
     }
 
@@ -487,7 +469,6 @@
         //쭉 스캔 후 일치하면 삭제
         for(i=1;i<tabSize;i++) {
             for (j=0;j<packageTabItems[i].length;j++) {
-
                 if(packageTabItems[i][j].ipCode == code) {
                     packageTabItems[i].splice(j, 1);
                 }
@@ -495,7 +476,9 @@
         }
 
         //바뀐 배열에 삽입
-        packageTabItems[beforeIdx].push(packageTabItems[0][index]);
+        if(beforeIdx != 0 ) {
+            packageTabItems[beforeIdx].push(packageTabItems[0][index]);
+        }
 
         packageTabItems[0][index].ipClass = value;
     }
@@ -529,6 +512,42 @@
         packageTabItems[0][index].sex = sex;
     }
 
+    function savePrice(code, value) {
+        var price = parseInt(value.innerHTML);
+
+        for (i = 0; i < packageTabItems[0].length; i++) {
+            if (packageTabItems[0][i].ipCode == code) {
+                packageTabItems[0][i].price = price;
+            }
+        }
+
+        for (i = 1; i < tabSize; i++) {
+            for (j = 0; j < packageTabItems[i].length; j++) {
+                if (packageTabItems[i][j].ipCode == code) {
+                    packageTabItems[i][j].price = price;
+                }
+            }
+        }
+    }
+
+    function saveMemo(code, value) {
+        var memo = value.innerHTML;
+
+        for (i = 0; i < packageTabItems[0].length; i++) {
+            if (packageTabItems[0][i].ipCode == code) {
+                packageTabItems[0][i].memo = memo;
+            }
+        }
+
+        for (i = 1; i < tabSize; i++) {
+            for (j = 0; j < packageTabItems[i].length; j++) {
+                if (packageTabItems[i][j].ipCode == code) {
+                    packageTabItems[i][j].memo = memo;
+                }
+            }
+        }
+    }
+
     //패키지구성 선택항목 최대선택개수
     function setChoiceNum() {
         choiceLimitArr[tabId] = $("#choiceLimit").val();
@@ -545,17 +564,16 @@
                 var values = value.split("#");
                 var check = 0;
 
-                for(i=0; i<injectionCode.length; i++) {
-                    if(injectionCode[i] == values[2]) {
-                        alert("검사명 : " + values[1] + "\n중복입니다. 다시 확인해주세요.");
+                //검사 관리코드 중복검사
+                for(i=0;i<packageTabItems[0].length;i++) {
+                    if(packageTabItems[0][i].ipCode == values[2]) {
+                        alert("검사명 : " + values[1] + "\n세부항목 : " + values[0] + "\n\n중복입니다. 다시 확인해주세요.");
                         check++;
                     }
                 }
 
                 //중복 아닌 검사항목만 추가
                 if(check == 0) {
-                    injectionCode.push(values[2]);
-
                     //검사항목 추가 임시 배열
                     var add = new Object();
                     add.inspection = values[0];
@@ -590,27 +608,49 @@
                     }
                 }
 
-                //검사항목 중복검사 배열에서 삭제
-                for (i = 0; i < injectionCode.length; i++) {
-                    if (injectionCode[i] == value) {
-                        injectionCode.splice(i, 1)
-                    }
-                }
+                $("input:checkbox[name=packageCheck]:checked").prop("checked", false);
             }
         });
         leftTableRefresh(tabId);
     }
 
-    //패키지항목 다 저장
+    //패키지구성 최종 저장
     function savePackageItems(){
         var sendItems = new Object();
 
-        sendItems.pkgId = pkgId.pkgId;
-        sendItems.ispList = packageTabItems[0];
+        var text = "";
+        for(i=0;i<packageTabItems[0].length;i++) {
+            if(packageTabItems[0][i].ipClass == "전체") {
+                text += packageTabItems[0][i].detail + "\n"
+                console.log(i + ": " +packageTabItems[0][i]);
+            }
+        }
+        if(text != "") {
+            alert(text + "\n구분 변경 후, 저장하세요.");
+        } else {
+            sendItems.pkgId = pkgId.pkgId;
+            sendItems.ispList = packageTabItems[0];
+            console.log("===============");
+            console.log(sendItems);
 
+            //TODO: 패키지구성 저장 API 확인
+            /*
+            if (confirm("저장하시겠습니까?") == true){
+                instance.post('M008002_REQ', sendItems).then(res => {
+                    console.log(res.data.message);
+                    if(res.data.message == "success") {
+                        alert("저장되었습니다.");
+                    }
+                });
+            }else{
+                return false;
+            }*/
+            return false;
+        }
+    }
 
-        instance.post('M008002_REQ', sendItems).then(res => {
-            console.log(res.data);
-        });
+    //패키지구성 취소 - 되돌아가기
+    function cancelPackageItems() {
+        history.back();
     }
 </script>

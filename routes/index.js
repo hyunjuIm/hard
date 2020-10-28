@@ -36,5 +36,10 @@ router.get('/package-injection-item', function(req, res, next) {
   res.render('package-injection-item');
 });
 
+//청구관리
+router.get('/billing-list', function(req, res, next) {
+  res.render('billing-list');
+});
+
 module.exports = router;
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="awsRds" uuid="3cf3e7d6-ef90-440e-a467-582417d723ce">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://database-careroom.c3s2w8bytme4.ap-northeast-2.rds.amazonaws.com:3306/careroom</jdbc-url>
+    </data-source>
+  </component>
+</project>
