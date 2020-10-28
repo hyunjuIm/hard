@@ -306,12 +306,15 @@
         }
     }
 
+    //세부항목 설정에 pkgID 값 던지기
+    function sendPackageID(index) {
+        location.href = "package-injection-item?pkgID=" + index;
+    }
+
     //패키지 생성 테이블
     function setPackageCreateData(data) {
         console.log(data);
         for (i = 0; i < data.length; i++) {
-            M.v = data[i].pkgId;
-
             var html = '';
             html += '<tr>"';
             html += '<td>' + data[i].pkgId + '</td>';
@@ -337,7 +340,7 @@
                 html += '<td>N</td>';
             }
             html += '<td><div class="btn-purple-square" style="padding: 2px 8px; font-size: 13px">' +
-                '<a style="color: white" href="/package-injection-item">설정</a></div></td>';
+                '<a style="color: white" onclick="sendPackageID(\'' + data[i].pkgId + '\')">설정</a></div></td>';
             html += '</tr>';
 
             $("#packageCreateInfos").append(html);
