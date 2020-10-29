@@ -84,16 +84,16 @@
                 <thead>
                 <tr>
                     <th style="width: 3%">NO</th>
-                    <th>고객사명</th>
-                    <th>사업장명</th>
+                    <th style="width: 10%">고객사명</th>
+                    <th style="width: 10%">사업장명</th>
                     <th>수검인원</th>
                     <th>청구인원</th>
                     <th>기업부담금</th>
                     <th>공단부담금</th>
                     <th>개인부담금</th>
                     <th>계산일자</th>
-                    <th>청구기간</th>
-                    <th>상세</th>
+                    <th style="width: 15%">청구기간</th>
+                    <th style="width: 7%"></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -151,6 +151,7 @@
 
     //검색 selector
     function setBillSelectData(data) {
+        console.log(data);
         //회사
         var name = [];
         var nameSize = 0;
@@ -206,13 +207,13 @@
 
         for (i = 0; i < companySelect.length; i++) {
             var jbSplit = companySelect[i].split('-');
-            var arr = jbSplit[jbSplit.length - 1];
+            var branchName = jbSplit[jbSplit.length - 1];
 
+            //TODO: 고객사 수정완료
             if(selectCompany.value == jbSplit[0]) {
-                var opt = document.createElement("option");
-                opt.value = companySelect[i].coId;
-                opt.innerHTML = arr;
-                branch.appendChild(opt);
+                var html = '';
+                html += '<option>' + branchName + '</option>'
+                $("#billComBranch").append(html);
             }
         }
     }
@@ -224,14 +225,13 @@
         }
     }
 
-    //세부항목 설정에 pkgID 값 던지기
+    //세부항목 설정에 bID 값 던지기
     function sendBillID(index) {
-        location.href = "billing-item?bID=" + index;
+        location.href = "billing-detail?bID=" + index;
     }
 
     //패키지 생성 테이블
     function setBillData(data) {
-        //TODO: 청구기간 채우기
         console.log(data);
         for (i = 0; i < data.length; i++) {
             var html = '';
@@ -245,9 +245,9 @@
             html += '<td>' + data[i].pcCharge + '</td>';
             html += '<td>' + data[i].psnCharge + '</td>';
             html += '<td>' + data[i].calculateDate + '</td>';
-            html += '<td>' + "청구기간" + '</td>';
+            html += '<td>' + data[i].calculateStartDate + "~" +  data[i].calculateEndDate+'</td>';
             html += '<td><div class="btn-purple-square" style="padding: 2px 8px; font-size: 13px">' +
-                '<a style="color: white" onclick="sendBillID(\'' + data[i].bid + '\')">설정</a></div></td>';
+                '<a style="color: white" onclick="sendBillID(\'' + data[i].bid + '\')">상세보기</a></div></td>';
             html += '</tr>';
 
             $("#billInfos").append(html);

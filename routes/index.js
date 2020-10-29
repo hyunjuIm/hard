@@ -41,5 +41,10 @@ router.get('/billing-list', function(req, res, next) {
   res.render('billing-list');
 });
 
+//청구관리
+router.get('/billing-detail', function(req, res, next) {
+  res.render('billing-detail');
+});
+
 module.exports = router;
 

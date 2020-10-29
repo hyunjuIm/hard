@@ -535,12 +535,12 @@
     function clickDetail(data) {
         rsvId.reservationId = data;
         instance.post('M003003_REQ_RES', rsvId).then(res => {
-            setDetailCostomerData(res.data);
+            setDetailCustomerData(res.data);
         });
     }
 
     //클릭시 고객정보
-    function setDetailCostomerData(data) {
+    function setDetailCustomerData(data) {
         console.log(data);
 
         //info1

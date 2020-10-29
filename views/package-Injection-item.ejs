@@ -151,8 +151,6 @@
 </div>
 <!--콘텐츠 내용-->
 
-<% include test.ejs %>
-
 </body>
 </html>
 
@@ -193,28 +191,23 @@
 
     //체크박스 전체 선택
     function clickAll(id, name) {
-        var clickId = "#" + id;
-        var clickName = "input[name=" + name + "]";
 
-        if ($(clickId).is(':checked')) {
-            $(clickName).prop("checked", true);
+        if ($("#"+id+"").is(':checked')) {
+            $("input[name="+name+"]").prop("checked", true);
         }
         else {
-            $(clickName).prop("checked", false);
+            $("input[name="+name+"]").prop("checked", false);
         }
     }
 
     //체크박스 하나라도 취소되면 전체 선택 해지
     function clickOne(name) {
-        var clickId = "#" + name;
-        var clickIdInput = "input[id="+ name +"]"
-        var clickName = "[name="+ name +"]:checked"
-
-        if($(clickId).is(':checked').length == $(clickName).length) {
-            $(clickIdInput).prop("checked", true);
+        console.log(name);
+        if($("#"+name+"").is(':checked').length == $("input[id="+ name +"]").length) {
+            $("input[id="+ name +"]").prop("checked", true);
         }
         else {
-            $(clickIdInput).prop("checked", false);
+            $("input[id="+ name +"]").prop("checked", false);
         }
     }
 
@@ -312,6 +305,7 @@
         );
         pkgId.pkgId = val;
 
+        //검사항목 리스트 맨 처음 불러와서 셋팅
         instance.post('M008001_RES', new Object()).then(res => {
             setInjectionData(res.data);
         });
@@ -633,8 +627,6 @@
             console.log("===============");
             console.log(sendItems);
 
-            //TODO: 패키지구성 저장 API 확인
-            /*
             if (confirm("저장하시겠습니까?") == true){
                 instance.post('M008002_REQ', sendItems).then(res => {
                     console.log(res.data.message);
@@ -644,8 +636,7 @@
                 });
             }else{
                 return false;
-            }*/
-            return false;
+            }
         }
     }
 
