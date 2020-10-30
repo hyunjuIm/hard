@@ -22,6 +22,32 @@
     <div class="row">
         <div class="col table-box">
             <h5><img src="images/bg_h2_tit.png" style="margin-right: 10px"> 검진현황판</h5>
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        신규예약
+                    </div>
+                    <div class="col">
+                        수진자
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        등록요청
+                    </div>
+                    <div class="col">
+                        예약변경
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        업무이슈
+                    </div>
+                    <div class="col">
+                        문의사항
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col table-box">
             <h5><img src="images/bg_h2_tit.png" style="margin-right: 10px"> 공지사항</h5>
@@ -83,6 +109,10 @@
 
 <script>
 
+    //검진현황판
+    instance.post('M002001_RES').then(res => {
+        setStateData(res.data);
+    });
     //공지사항
     instance.post('M002002_RES').then(res => {
         setNoticeData(res.data);
@@ -95,6 +125,13 @@
     instance.post('M002004_RES').then(res => {
         setManageScheduleData(res.data);
     });
+
+    //검진현황판
+    function setStateData(data) {
+        console.log(data);
+
+
+    }
 
     //공지사항
     function setNoticeData(data) {
