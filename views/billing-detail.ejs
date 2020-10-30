@@ -3,15 +3,13 @@
 <head>
     <title>듀얼헬스케어:청구상세</title>
 
-    <% include menu-head %>
-
 </head>
 
 <body>
 
 <!--상단 네비바-->
 <header>
-    <% include top-menu %>
+    <% include title %>
 </header>
 <!--상단 네비바-->
 
@@ -107,19 +105,6 @@
             html += '</tr>';
 
             $("#billDetailInfos").append(html);
-        }
-    }
-
-    //특수문자 제거
-    function regExp(str) {
-        var reg = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\$%&\\\=\(\'\"]/gi
-        //특수문자 검증
-        if (reg.test(str)) {
-            //특수문자 제거후 리턴
-            return str.replace(reg, "");
-        } else {
-            //특수문자가 없으므로 본래 문자 리턴
-            return str;
         }
     }
 

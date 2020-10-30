@@ -2,16 +2,13 @@
 <html>
 <head>
     <title>듀얼헬스케어:예약관리</title>
-
-    <% include menu-head %>
-
 </head>
 
 <body>
 
 <!--상단 네비바-->
 <header>
-    <% include top-menu %>
+    <% include title %>
 </header>
 <!--상단 네비바-->
 
@@ -48,16 +45,21 @@
                         <label class="col-form-label">
                             <li>고객사</li>
                         </label>
-                        <div class="form-group col">
-                            <select id="companyName" class="form-control" onchange="setCompanySelectOption(this, 'companyBranch')">
+                        <div class="form-group col" style="display: flex">
+                            <select id="companyName" class="form-control" style="margin-right: 10px"
+                                    onchange="setPackageCompanySelectOption(this, 'companyBranch')">
+                                <option selected>-전체-</option>
+                            </select>
+                            <select id="companyBranch" class="form-control">
                                 <option selected>-전체-</option>
                             </select>
                         </div>
+
                         <label class="col-form-label" style="margin-left: 20px">
-                            <li>사업장</li>
+                            <li>병원</li>
                         </label>
                         <div class="form-group col">
-                            <select id="companyBranch" class="form-control">
+                            <select id="hospitalName" class="form-control">
                                 <option selected>-전체-</option>
                             </select>
                         </div>
@@ -72,12 +74,8 @@
                             </select>
                         </div>
                         <label class="col-form-label" style="margin-left: 20px">
-                            <li>병원</li>
                         </label>
                         <div class="form-group col">
-                            <select id="hospitalName" class="form-control">
-                                <option selected>-전체-</option>
-                            </select>
                         </div>
                     </div>
                     <hr>
@@ -110,11 +108,12 @@
             <table id="reservationInfos" class="table table-hover" style="margin-top: 45px">
                 <thead>
                 <tr>
-                    <th style="width: 3%">NO</th>
+                    <th style="width: 3%"><input type="checkbox" id="reservationCheck" name="reservationCheck" onclick="clickAll(id, name)"></th>
+                    <th>NO</th>
                     <th>서비스</th>
                     <th>고객사</th>
                     <th>사업장</th>
-                    <th>아이디<br>(사번)</th>
+                    <th style="color: #3529b1">아이디<br>(사번)</th>
                     <th>성명</th>
                     <th>등급</th>
                     <th style="width: 7%">생년월일</th>
@@ -140,199 +139,14 @@
 </div>
 <!--콘텐츠 내용-->
 
-
-<!-- 고객 상세 정보 Modal -->
-<div class="modal fade" id="customerModal" tabindex="-1" aria-labelledby="customerModalLabel" aria-hidden="true">
-    <div class="modal-dialog " style="max-width: 100%; width: auto; display: table;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="container" style="margin-top: 20px">
-                    <div class="menu-title" style="font-size: 22px; margin-bottom: 20px">
-                        <img src="images/bg_h2_tit.png" style="margin-right: 10px;">
-                        고객정보
-                    </div>
-                    <div class="row" style="width: 800px">
-                        <div class="col">
-                            <table class="table" id="info1">
-                                <tbody>
-                                <tr>
-                                    <th>소속</th>
-                                    <td id="cus-companyName"></td>
-                                </tr>
-                                <tr>
-                                    <th>부서</th>
-                                    <td id="cus-companyBranch"></td>
-                                </tr>
-                                <tr>
-                                    <th>성명</th>
-                                    <td id="cus-familyName" contentEditable="true"></td>
-                                </tr>
-                                <tr>
-                                    <th>생년월일</th>
-                                    <td id="cus-familyBirthDate" contentEditable="true"></td>
-                                </tr>
-                                <tr>
-                                    <th>연락처</th>
-                                    <td id="cus-familyPhone" contentEditable="true"></td>
-                                </tr>
-                                <tr>
-                                    <th>주소</th>
-                                    <td id="cus-familyAddress" contentEditable="true"></td>
-                                </tr>
-                                <tr>
-                                    <th>이메일</th>
-                                    <td id="cus-familyEmail" contentEditable="true"></td>
-                                </tr>
-                                <tr>
-                                    <th>공단대상</th>
-                                    <td id="cus-familyPcDiscount">
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label" for="familyPcDiscountYes">YES&nbsp</label>
-                                            <input class="form-check-input" type="checkbox" id="familyPcDiscountYes"
-                                                   name="cus-familyPcDiscount" value="true" onclick="onlyCheck(this, name)">
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label" for="familyPcDiscountNo">NO&nbsp</label>
-                                            <input class="form-check-input" type="checkbox" id="familyPcDiscountNo"
-                                                   name="cus-familyPcDiscount" value="false" onclick="onlyCheck(this, name)">
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>듀얼(동의)</th>
-                                    <td id="cus-familyPsInfoDual">
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label" for="familyPsInfoDualYes">YES&nbsp</label>
-                                            <input class="form-check-input" type="checkbox" id="familyPsInfoDualYes"
-                                                   name="cus-familyPsInfoDual" value="true" onclick="onlyCheck(this, name)">
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label" for="familyPsInfoDualNo">NO&nbsp</label>
-                                            <input class="form-check-input" type="checkbox" id="familyPsInfoDualNo"
-                                                   name="cus-familyPsInfoDual" value="false" onclick="onlyCheck(this, name)">
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>병원(동의)</th>
-                                    <td id="cus-familyPsInfoHos">
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label" for="familyPsInfoHosYes">YES&nbsp</label>
-                                            <input class="form-check-input" type="checkbox" id="familyPsInfoHosYes"
-                                                   name="cus-familyPsInfoHos" value="true" onclick="onlyCheck(this, name)">
-                                        </div>
-                                        <div class="form-check form-check-inline">
-                                            <label class="form-check-label" for="familyPsInfoHosNo">NO&nbsp</label>
-                                            <input class="form-check-input" type="checkbox" id="familyPsInfoHosNo"
-                                                   name="cus-familyPsInfoHos" value="false" onclick="onlyCheck(this, name)">
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-
-                            <div id="cus-packageReservation" style="font-size:14px; color: #5645ed"></div>
-                            <div id="cus-packageInspection" style="font-size:14px; color: #5645ed"></div>
-
-                            <table class="table" id="info2">
-                                <tbody>
-                                <tr>
-                                    <th>1차 예약일</th>
-                                    <td id="cus-reservationFirstWishDate" contentEditable="true"></td>
-                                    <td style="width: 60px">
-                                        <div
-                                                class="btn-save-square"
-                                                style="padding: 0; width: inherit; font-size: 13px"
-                                                onclick="setIpDate(1)"> 확정
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>2차 예약일</th>
-                                    <td id="cus-reservationSecondWishDate" contentEditable="true"></td>
-                                    <td style="width: 60px">
-                                        <div
-                                                class="btn-save-square"
-                                                style="padding: 0; width: inherit; font-size: 13px"
-                                                onclick="setIpDate(2)"> 확정
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>예약 확정일</th>
-                                    <td colspan="2" id="cus-ipDate" contentEditable="true"></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="col">
-                            <table class="table" id="info3">
-                                <tbody>
-                                <tr>
-                                    <th>예약서비스</th>
-                                    <td id="cus-packageServiceName"></td>
-                                </tr>
-                                <tr>
-                                    <th>병원</th>
-                                    <td id="cus-packageHospitalName"></td>
-                                </tr>
-                                <tr>
-                                    <th>패키지</th>
-                                    <td id="cus-packageName"></td>
-                                </tr>
-                                <tr>
-                                    <th>선택검사</th>
-                                    <td id="cus-piiClassList"></td>
-                                </tr>
-                                <tr>
-                                    <th>추가검사</th>
-                                    <td id="cus-piiList"></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <table class="table" id="info4">
-                                <tbody>
-                                <tr>
-                                    <th>패키지금액</th>
-                                    <td id="cus-packagePrice"></td>
-                                </tr>
-                                <tr>
-                                    <th>회사지원금</th>
-                                    <td id="cus-companySupportPrice" contentEditable="true"></td>
-                                </tr>
-                                <tr>
-                                    <th>본인부담금</th>
-                                    <td id="cus-customerPayedPrice"></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                            <table class="table" id="info5">
-                                <tbody>
-                                <tr>
-                                    <th>메모</th>
-                                    <td id="cus-memo" contentEditable="true"></td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-            <div class="modal-footer">
-                <div class="btn-save-square" style="float: right;" onclick="saveInformation()">저장</div>
-            </div>
-        </div>
-    </div>
-</div>
+<!--Modal-->
+<% include reservationModal.ejs %>
 
 </body>
 </html>
+
+<!--체크박스 검사-->
+<% include check-data.ejs %>
 
 <script type="text/javascript">
 
@@ -340,7 +154,6 @@
     instance.post('M003001_RES').then(res => {
         setReservationSelectData(res.data);
     });
-
 
     //검색
     function searchInformation() {
@@ -382,7 +195,6 @@
         });
     }
 
-
     var companySelect;
     //검색 selector
     function setReservationSelectData(data) {
@@ -398,28 +210,42 @@
             html += '<option>' + data.reservationServiceName[i] + '</option>'
             $("#reservationServiceName").append(html);
         }
-        //회사
-        if (data.companyName.length > 0) {
-            //회사명 - 지점있을때
-            var jbSplit = data.companyName[0].split('-');
-            var companyName = jbSplit[0];
-            var html = '';
-            html += '<option>' + companyName + '</option>'
-            $("#companyName").append(html);
 
-            companySelect = data.companyName;
-        } else {
-            //회사명 - 지점없을때
-            for (i = 0; i < data.companyName.length; i++) {
-                var html = '';
-                html += '<option>' + data.companyName[i] + '</option>'
-                $("#companyName").append(html);
+        //회사
+        var name = [];
+        var nameSize = 0;
+        for (i = 0; i < data.companyName.length; i++) {
+            var check = 0;
+
+            //회사명 - 지점있을때
+            var jbSplit = data.companyName[i].split('-');
+            var companyName = jbSplit[0];
+
+            for(var j=0; j<nameSize; j++) {
+                if(name[j] == companyName) {
+                    check += 1;
+                }
+            }
+            if(check < 1) {
+                name[nameSize] = companyName;
+                nameSize += 1;
             }
         }
+        for(i=0; i<nameSize; i++) {
+            var html = '';
+            html += '<option value=\'' + name[i] + '\'>' + name[i] + '</option>'
+            $("#companyName").append(html);
+        }
+        companySelect = data.companyName;
+
         //진행상태
         for (i = 0; i < data.reservationStatus.length; i++) {
             var html = '';
-            html += '<option>' + data.reservationStatus[i] + '</option>'
+            if(data.reservationStatus[i] == "true") {
+                html += '<option value="true">수검완료</option>'
+            } else {
+                html += '<option value="false">예약신청</option>'
+            }
             $("#reservationStatus").append(html);
         }
         //병원명
@@ -431,33 +257,25 @@
     }
 
     //사업장 리스트 셋팅
-    function setCompanySelectOption(selectCompany, targetBranch) {
+    function setPackageCompanySelectOption(selectCompany, targetBranch) {
         var branch = document.getElementById(targetBranch);
-        removeAll(branch);
 
         var opt = document.createElement("option");
-        opt.value = "all";
-        opt.innerHTML = "-전체-";
         branch.appendChild(opt);
 
-        if(selectCompany.value == "all") {
-            removeAll(branch);
-        }
-        else {
-            removeAll(branch);
-            var arr;
-            for (i = 0; i < companySelect.length; i++) {
-                var jbSplit = companySelect[i].split('-');
-                console.log(jbSplit);
-                arr = jbSplit[jbSplit.length - 1];
+        removeAll(branch);
 
+        for (i = 0; i < companySelect.length; i++) {
+            var jbSplit = companySelect[i].split('-');
+            var arr = jbSplit[jbSplit.length - 1];
+
+            if(selectCompany.value == jbSplit[0]) {
                 var opt = document.createElement("option");
-                opt.value = arr;
+                opt.value = companySelect[i].coId;
                 opt.innerHTML = arr;
                 branch.appendChild(opt);
             }
         }
-
     }
 
     //옵션 삭제
@@ -467,22 +285,16 @@
         }
     }
 
-    //체크박스 하나만 체크 되게
-    function onlyCheck(chk, name) {
-        var obj = document.getElementsByName(name);
-        for(var i=0; i<obj.length; i++){
-            if(obj[i] != chk){
-                obj[i].checked = false;
-            }
-        }
-    }
-
     //예약관리 테이블
     function setReservationData(data) {
         for (i = 0; i < data.length; i++) {
             var html = '';
-            html += '<tr>"';
-            html += '<td>' + data[i].id + '</td>';
+            html += '<tr>';
+            html += '<td><input type="checkbox" name="reservationCheck" onclick="clickOne(name)"></td>';
+
+            var no = i+1;
+            html += '<td>' + no + '</td>';
+
             html += '<td>' + data[i].serviceName + '</td>';
             html += '<td>' + data[i].companyName + '</td>';
             html += '<td>' + data[i].companyBranch + '</td>';
@@ -492,8 +304,8 @@
             html += '<td>' + data[i].familyBirthDate + '</td>';
             html += '<td>' + data[i].hospitalName + '</td>';
             html += '<td>' + data[i].familyPhone;
-            html += '<td> 1차 ' + data[i].firstWishDate;
-            html += '<p> 2차 ' + data[i].secondWishDate + '</td>';
+            html += '<td>1차 ' + data[i].firstWishDate;
+            html += '<p>2차 ' + data[i].secondWishDate + '</td>';
 
             if (data[i].ipCheck) {
                 html += '<td>Y</td>';
@@ -502,8 +314,8 @@
             }
 
             html += '<td>' + data[i].packageName + '</td>';
-            html += '<td>' + data[i].packagePrice + '</td>';
-            html += '<td>' + data[i].companySupportPrice + '</td>';
+            html += '<td>' + data[i].packagePrice.toLocaleString() + '</td>';
+            html += '<td>' + data[i].companySupportPrice.toLocaleString() + '</td>';
 
             if (data[i].familyPsInfoCheckDual) {
                 html += '<td>Y</td>';
@@ -526,132 +338,6 @@
             html += '</tr>';
 
             $("#reservationInfos").append(html);
-        }
-    }
-
-    //고객정보상세
-    var rsvId = Object();
-
-    function clickDetail(data) {
-        rsvId.reservationId = data;
-        instance.post('M003003_REQ_RES', rsvId).then(res => {
-            setDetailCustomerData(res.data);
-        });
-    }
-
-    //클릭시 고객정보
-    function setDetailCustomerData(data) {
-        console.log(data);
-
-        //info1
-        document.getElementById('cus-companyName').innerHTML = data.companyName;
-        document.getElementById('cus-companyBranch').innerHTML = data.companyBranch;
-        document.getElementById('cus-familyName').innerHTML = data.familyName;
-        document.getElementById('cus-familyBirthDate').innerHTML = data.familyBirthDate;
-        document.getElementById('cus-familyPhone').innerHTML = data.familyPhone;
-        document.getElementById('cus-familyAddress').innerHTML = data.familyAddress;
-        document.getElementById('cus-familyEmail').innerHTML = data.familyEmail;
-
-        if(data.familyPcDiscount) {
-            $("input:checkbox[id='familyPcDiscountYes']").prop("checked", true);
-            $("input:checkbox[id='familyPcDiscountNo']").prop("checked", false);
-        } else {
-            $("input:checkbox[id='familyPcDiscountYes']").prop("checked", false);
-            $("input:checkbox[id='familyPcDiscountNo']").prop("checked", true);
-        }
-        if(data.familyPsInfoDual) {
-            $("input:checkbox[id='familyPsInfoDualYes']").prop("checked", true);
-            $("input:checkbox[id='familyPsInfoDualNo']").prop("checked", false);
-        } else {
-            $("input:checkbox[id='familyPsInfoDualYes']").prop("checked", false);
-            $("input:checkbox[id='familyPsInfoDualNo']").prop("checked", true);
-        }
-        if(data.familyPsInfoHos) {
-            $("input:checkbox[id='familyPsInfoHosYes']").prop("checked", true);
-            $("input:checkbox[id='familyPsInfoHosNo']").prop("checked", false);
-        } else {
-            $("input:checkbox[id='familyPsInfoHosYes']").prop("checked", false);
-            $("input:checkbox[id='familyPsInfoHosNo']").prop("checked", true);
-        }
-
-        //info2
-        document.getElementById('cus-packageReservation').innerHTML
-            = "예약기간 : " + data.packageReservationStartDate + " ~ " + data.packageReservationEndDate;
-        document.getElementById('cus-packageInspection').innerHTML
-            = "검진기간 : " + data.packageInspectionStartDate + " ~ " + data.packageInspectionEndDate;
-        document.getElementById('cus-reservationFirstWishDate').innerHTML = data.reservationFirstWishDate;
-        document.getElementById('cus-reservationSecondWishDate').innerHTML = data.reservationSecondWishDate;
-        document.getElementById('cus-ipDate').innerHTML = data.ipDate;
-
-        //info3
-        document.getElementById('cus-packageServiceName').innerHTML = data.packageServiceName;
-        document.getElementById('cus-packageHospitalName').innerHTML = data.packageHospitalName;
-        document.getElementById('cus-packageName').innerHTML = data.packageName;
-        document.getElementById('cus-piiClassList').innerHTML = data.piiClassList;
-        document.getElementById('cus-piiList').innerHTML = data.piiList;
-
-        //info4
-        document.getElementById('cus-packagePrice').innerHTML = data.packagePrice;
-        document.getElementById('cus-companySupportPrice').innerHTML = data.companySupportPrice;
-        document.getElementById('cus-customerPayedPrice').innerHTML = data.customerPayedPrice;
-
-        //info5
-        document.getElementById('cus-memo').innerHTML = data.memo;
-    }
-
-    //예약확정일
-    function setIpDate(num) {
-        if (num == 1) {
-            document.getElementById('cus-ipDate').innerHTML = document.getElementById('cus-reservationFirstWishDate').innerHTML;
-        } else if (num == 2) {
-            document.getElementById('cus-ipDate').innerHTML = document.getElementById('cus-reservationSecondWishDate').innerHTML;
-        }
-    }
-
-    //체크값 result
-    function booleanData(name) {
-        var size = document.getElementsByName(name).length;
-        var result;
-        for(var i = 0; i < size; i++){
-            if(document.getElementsByName(name)[i].checked == true){
-                result = document.getElementsByName(name)[i].value
-            }
-        }
-
-        return result;
-    }
-
-    //수정된 정보로 저장
-    function saveInformation() {
-        var saveItems = new Object();
-
-        saveItems.reservationId = rsvId.reservationId;
-        saveItems.familyName = document.getElementById('cus-familyName').innerText;
-        saveItems.familyBirthDate = document.getElementById('cus-familyBirthDate').innerText;
-        saveItems.familyPhone = document.getElementById('cus-familyPhone').innerText;
-        saveItems.familyAddress = document.getElementById('cus-familyAddress').innerText;
-        saveItems.familyEmail = document.getElementById('cus-familyEmail').innerText;
-
-        saveItems.familyPcDiscount = booleanData("cus-familyPcDiscount");
-        saveItems.familyPsInfoDual = booleanData("cus-familyPsInfoDual");
-        saveItems.familyPsInfoHos = booleanData("cus-familyPsInfoHos");
-
-        saveItems.reservationFirstWishDate = document.getElementById('cus-reservationFirstWishDate').innerText;
-        saveItems.reservationSecondWishDate = document.getElementById('cus-reservationSecondWishDate').innerText;
-        saveItems.ipDate = document.getElementById('cus-ipDate').innerText;
-        saveItems.companySupportPrice = document.getElementById('cus-companySupportPrice').innerText;
-        saveItems.memo = document.getElementById('cus-memo').innerText;
-
-        console.log(saveItems);
-
-        if (confirm("저장하시겠습니까?") == true){
-            instance.post('M003004_REQ_RES', saveItems).then(res => {
-                console.log(res.data.message);
-                alert("저장되었습니다.");
-                clickDetail(saveItems.reservationId);
-            });
-        }else{
-            return false;
         }
     }
 </script>

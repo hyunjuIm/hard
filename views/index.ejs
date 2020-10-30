@@ -3,8 +3,6 @@
 <head>
     <title>듀얼헬스케어</title>
 
-    <% include menu-head %>
-
     <style>
         .table-box {
             min-height: 340px;
@@ -15,7 +13,7 @@
 
 <!--상단 네비바-->
 <header>
-    <% include top-menu %>
+    <% include title %>
 </header>
 <!--상단 네비바-->
 
@@ -27,13 +25,16 @@
         </div>
         <div class="col table-box">
             <h5><img src="images/bg_h2_tit.png" style="margin-right: 10px"> 공지사항</h5>
-            <table id="noticeTable" class="table" style="margin-top: 20px">
+            <a href="#" style="float: right; margin-top: -15px; margin-bottom: 5px">
+                <img src="images/link_all_more.png">
+            </a>
+            <table id="noticeTable" class="table">
                 <thead>
                 <tr>
                     <th style="width: 10%">NO</th>
-                    <th >제목</th>
-                    <th >작성자</th>
-                    <th >등록일</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>등록일</th>
                 </tr>
                 </thead>
             </table>
@@ -42,41 +43,58 @@
     <div class="row">
         <div class="col table-box">
             <h5><img src="images/bg_h2_tit.png" style="margin-right: 10px"> 담당자정보</h5>
-            <table id="companyManagerTable" class="table" style="margin-top: 20px">
+            <a href="/company-list" style="float: right; margin-top: -15px; margin-bottom: 5px">
+                <img src="images/link_all_more.png">
+            </a>
+            <table id="companyManagerTable" class="table">
                 <thead>
                 <tr>
-                    <th >기업명</th>
-                    <th >사업장</th>
-                    <th >이름</th>
-                    <th >연락처</th>
-                    <th >이메일</th>
+                    <th>기업명</th>
+                    <th>사업장</th>
+                    <th>이름</th>
+                    <th>연락처</th>
+                    <th>이메일</th>
                 </tr>
                 </thead>
             </table>
         </div>
         <div class="col table-box">
-            <h5><img src="images/bg_h2_tit.png" style="margin-right: 10px"> 운영일정</h5>
-            <table id="manageScheduleTable" class="table" style="margin-top: 20px">
+            <h5><img src="images/bg_h2_tit.png" style="margin-right: 10px">운영일정</h5>
+            <a href="/package-list" style="float: right; margin-top: -15px; margin-bottom: 5px">
+                <img src="images/link_all_more.png">
+            </a>
+            <table id="manageScheduleTable" class="table">
                 <thead>
                 <tr>
-                    <th >병원명</th>
-                    <th >고객사</th>
-                    <th >사업장</th>
-                    <th >오픈일</th>
-                    <th >마감일</th>
+                    <th>병원명</th>
+                    <th>고객사</th>
+                    <th>사업장</th>
+                    <th>오픈일</th>
+                    <th>마감일</th>
                 </tr>
                 </thead>
             </table>
         </div>
     </div>
 </div>
-<!--콘텐츠 내용-->
-
 </body>
-
 </html>
 
+
 <script>
+
+    //공지사항
+    instance.post('M002002_RES').then(res => {
+        setNoticeData(res.data);
+    });
+    //담당자정보
+    instance.post('M002003_RES').then(res => {
+        setCompanyManagerData(res.data);
+    });
+    //운영일정
+    instance.post('M002004_RES').then(res => {
+        setManageScheduleData(res.data);
+    });
 
     //공지사항
     function setNoticeData(data) {
@@ -124,18 +142,5 @@
             $("#manageScheduleTable").append(html);
         }
     }
-
-    //공지사항
-    instance.post('M002002_RES').then(res => {
-        setNoticeData(res.data);
-    });
-    //담당자정보
-    instance.post('M002003_RES').then(res => {
-        setCompanyManagerData(res.data);
-    });
-    //운영일정
-    instance.post('M002004_RES').then(res => {
-        setManageScheduleData(res.data);
-    });
 
 </script>

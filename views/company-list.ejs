@@ -3,15 +3,13 @@
 <head>
     <title>듀얼헬스케어:기업관리</title>
 
-    <% include menu-head %>
-
 </head>
 
 <body>
 
 <!--상단 네비바-->
 <header>
-    <% include top-menu %>
+    <% include title %>
 
 </header>
 <!--상단 네비바-->
@@ -98,10 +96,11 @@
             <table id="companyInfo" class="table table-hover" style="margin-top: 45px">
                 <thead>
                 <tr>
-                    <th style="width: 5%">NO</th>
-                    <th style="width: 13%">고객사명</th>
+                    <th style="width: 4%"><input type="checkbox" id="companyCheck" name="companyCheck" onclick="clickAll(id, name)"></th>
+                    <th style="width: 4%">NO</th>
+                    <th style="width: 12%; color: #3529b1">고객사</th>
                     <th>사업장</th>
-                    <th style="width: 13%">서비스</th>
+                    <th style="width: 12%">서비스</th>
                     <th>계약유무</th>
                     <th>직원 수</th>
                     <th>진행현황</th>
@@ -125,6 +124,9 @@
 
 </body>
 </html>
+
+<!--체크박스 검사-->
+<% include check-data.ejs %>
 
 <script type="text/javascript">
 
@@ -185,13 +187,21 @@
         //진행상태
         for (i = 0; i < data.status.length; i++) {
             var html = '';
-            html += '<option>' + data.status[i] + '</option>'
+            if(data.status[i] == "true") {
+                html += '<option value="true">Y</option>'
+            } else {
+                html += '<option value="false">N</option>'
+            }
             $("#status").append(html);
         }
         //계약유무
         for (i = 0; i < data.contract.length; i++) {
             var html = '';
-            html += '<option>' + data.contract[i] + '</option>'
+            if(data.contract[i] == "true") {
+                html += '<option value="true">Y</option>'
+            } else {
+                html += '<option value="false">N</option>'
+            }
             $("#contract").append(html);
         }
     }
@@ -202,10 +212,14 @@
         for (i = 0; i < data.length; i++) {
             var html = '';
             html += '<tr>"';
-            html += '<td>' + data[i].id + '</td>';
+            html += '<td><input type="checkbox" name="companyCheck" onclick="clickOne(name)"></td>';
+
+            var no = i+1;
+            html += '<td>' + no + '</td>';
+
             html += '<td data-toggle="modal" data-target="#companyDetailModal" onClick="clickCompanyDetail(\'' + data[i].id + '\')">' + data[i].name + '</td>';
             html += '<td>' + data[i].branch + '</td>';
-            html += '<td>' + data[i].services + '</td>';
+            html += '<td>' + regExp(data[i].services) + '</td>';
 
             if (data[i].contract) {
                 html += '<td>Y</td>';
