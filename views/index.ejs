@@ -4,8 +4,34 @@
     <title>듀얼헬스케어</title>
 
     <style>
+        .state-1, .state-2 {
+            width: 90%;
+            margin: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            flex-direction: row;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0px 0px 10px #e6e6e6;
+        }
+
+        .state-1 {
+            padding: 13px;
+            border-radius: 30px;
+            background: #5645ED;
+            color: white;
+        }
+
+        .state-2 {
+            padding: 80px;
+            border: 1px solid #5645ED;
+            border-radius: 20px;
+            background: white;
+            color: #5645ED;
+        }
+
         .table-box {
-            min-height: 340px;
+            min-height: 320px;
         }
     </style>
 </head>
@@ -22,31 +48,63 @@
     <div class="row">
         <div class="col table-box">
             <h5><img src="images/bg_h2_tit.png" style="margin-right: 10px"> 검진현황판</h5>
-            <div class="container">
-                <div class="row">
-                    <div class="col">
-                        신규예약
-                    </div>
-                    <div class="col">
-                        수진자
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        등록요청
-                    </div>
-                    <div class="col">
-                        예약변경
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        업무이슈
-                    </div>
-                    <div class="col">
-                        문의사항
-                    </div>
-                </div>
+            <div class="container" style="padding: 30px">
+                <table style="border: 0; width: 90%">
+                    <tr>
+                        <td>
+                            <div class="state-1">
+                                <img src="images/ico_health_list01.png" style="margin-right: 10px">
+                                <span style="margin-right: 5px">신규예약</span>
+                                <span id="newReservationNum"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="state-1">
+                                <img src="images/ico_health_list02.png" style="margin-right: 10px">
+                                <span style="margin-right: 5px">수진자</span>
+                                <span id="servedReservationNum"></span>
+                            </div>
+                        </td>
+                        <td rowspan="3">
+                            <div class="state-2">
+                                <span style="margin-right: 5px">정산완료</span>
+                                <span id="completeNum"></span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="state-1">
+                                <img src="images/ico_master_dash_list03.png" style="margin-right: 10px">
+                                <span style="margin-right: 5px">등록요청</span>
+                                <span id="requirePackageNum"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="state-1">
+                                <img src="images/ico_master_dash_list04.png" style="margin-right: 10px">
+                                <span style="margin-right: 5px">예약변경</span>
+                                <span id="changeReservationNum"></span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="state-1">
+                                <img src="images/ico_master_dash_list05.png" style="margin-right: 10px">
+                                <span style="margin-right: 5px">업무이슈</span>
+                                <span id="issueNum"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="state-1">
+                                <img src="images/ico_master_dash_list06.png" style="margin-right: 10px">
+                                <span style="margin-right: 5px">문의사항</span>
+                                <span id="questionNum"></span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
         <div class="col table-box">
@@ -129,6 +187,14 @@
     //검진현황판
     function setStateData(data) {
         console.log(data);
+
+        $("#newReservationNum").append(data.newReservationNum + "명");
+        $("#servedReservationNum").append(data.servedReservationNum + "명");
+        $("#completeNum").append(data.completeNum + "명");
+        $("#requirePackageNum").append(data.requirePackageNum + "명");
+        $("#changeReservationNum").append(data.changeReservationNum + "명");
+        $("#issueNum").append(data.issueNum + "명");
+        $("#questionNum").append(data.questionNum + "명");
 
 
     }
